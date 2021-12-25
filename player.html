@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="player.css">
+    <script type="text/javascript" src="MyUtility.js"></script>
+    <script type="text/javascript" src="models/point.js"></script>
+    <script type="text/javascript" src="models/edge.js"></script>
+</head>
+<body id='pageBody'>
+    
+    <div id='bounceContainer'>
+        <h4>Michael's Graphic Playground</h4>
+    </div>
+
+    <div id='canvas-containter'>
+        <div  id='canvas-info'>
+            
+                <div style="float: left; margin:0; width: 9%;">
+                    <button id='toolboxButton'> <p id='toolboxtext1'> tool </p> <p id='toolboxtext2'> box </p> </button>
+                </div>
+                <div id='painttools'>
+
+                    <div id='paintEditor'>
+
+                        <input type="number" id="sSize" name="sSize" step="1" placeholder="Width" min="1" max="99" >
+                        
+                        <form id="styleForm">
+                            <select name="pathType" class="strokeStyles" id="strokeStyles" autocomplete="off">
+                                <option class="styleOption" value = "linear" selected>linear</option>
+                                <option class="styleOption" value = "quadratic">quadratic</option>
+                                <option class="styleOption" value = "cubic">cubic</option>
+                            </select>
+                        </form>
+                        
+                        
+                            <button id='toolbutton' style="font-family: inherit;"> Color 
+                                <input type="color" id="colorPicker" name="colorPicker" title="select" placeholder="" value="#ff0000"/>
+                            </button>
+                        
+                        <button id='circleButton' style="font-family: inherit;"> Circle 
+                        
+                        </button>
+                        
+                        <button id='shapebutton' style="font-family: inherit;"> Draw Shape 
+                        
+                        </button>
+
+                        <button id='endShapeButton' style="font-family: inherit;"> End Shape 
+                        
+                        </button>
+
+                        
+
+                        <button id='clearbutton' style="font-family: inherit;"> Clear 
+                        
+                        </button>
+                            
+                        
+                        
+                        
+                    </div>
+
+                    <div id='imageEditor'>
+                        
+                        <label for="file" id="toolbutton2">Add Image
+                            <input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: none; margin-top: 0px;">
+                        </label>
+
+                        
+                    </div>                 
+                    
+
+                </div>
+                <div style="float: left; margin:0; width: 9%; text-align: right;">
+                    <button id='toolboxButton2'> 
+                        <p style="writing-mode: vertical-rl;
+                            text-orientation: sideways;
+                            padding: 0px;
+                            margin: 0px;
+                            padding-bottom: 20px;
+                            -moz-transform: scale(-1, -1);
+                            -webkit-transform: scale(-1, -1);
+                            -o-transform: scale(-1, -1);
+                            -ms-transform: scale(-1, -1);
+                            transform: scale(-1, -1);
+                            float: left;
+                            font-style: italic;"> tool</p> 
+                        <p style="writing-mode: vertical-rl;
+                            text-orientation: sideways;
+                            padding: 0px;
+                            margin: 0px;
+                            padding-bottom: 0px;
+                            -moz-transform: scale(-1, -1);
+                            -webkit-transform: scale(-1, -1);
+                            -o-transform: scale(-1, -1);
+                            -ms-transform: scale(-1, -1);
+                            transform: scale(-1, -1);
+                            float: left;
+                            font-style: italic;"> box </p> 
+                    </button>
+                </div>
+
+        </div>
+        <div id='paintbox'>
+            <img id="output" width="200" style="cursor: pointer; position: absolute;"/> 
+            <svg id="shapesvg" width="768" height="512" style="position: absolute;"></svg>
+            <canvas id="paintdest">
+                
+            </canvas>
+            
+        </div>    
+         
+         
+    </div>  
+    <div style="margin: 0 auto;">
+        <h1 style="margin: 0 auto; text-align: center; margin: 5px; padding-bottom: 5px; font-family: cursive;"> HAVE FUN (:</h1>
+        
+    </div>   
+    
+
+</body>
+<script>
+    var loadFile = function(event) {
+        var image = document.getElementById('output');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
+</script>
+<script type ="text/javascript" src="bouncingballs.js"></script>
+<script type="text/javascript" src="draw.js"></script>
+</html>

@@ -1,0 +1,289 @@
+#pageBody {
+    background-color: cornflowerblue; 
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    
+    margin: 0 auto;
+    cursor:default;
+}
+
+#bounceContainer {
+    margin: 0 auto; 
+    height: 120px;
+    background-color:mediumpurple;
+    text-align: center;
+    border-style: solid;
+    border-color:aquamarine;
+    border-width: 5px;
+    padding: 0%;
+    margin-right: 200px;
+    margin-left: 200px;
+}
+h4{
+    padding-top: 25px;
+    font-family: cursive;
+}
+h5{
+    font-family: cursive;
+    margin-top: 10px;
+    display: inline-block;
+}
+#canvas-containter {
+    margin: 0 auto; 
+    height: fit-content;
+    background-color: cornflowerblue;
+    text-align: center;
+    border: 5px aquamarine solid;
+    margin-top: 5px;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+#canvas-info {
+    text-align: left; 
+    background-color: mediumpurple; 
+    padding-bottom: 5px;
+    margin: 0; 
+    padding-left: 20px; 
+    padding-top: 10px;
+    padding-right: 20px;
+    min-height: 125px;
+    height: fit-content;
+    width: auto;
+    position: relative;
+    margin-bottom: 0px;
+}
+
+
+#toolboxButton {
+    cursor: default; 
+    background-color: aquamarine; 
+    border-radius: 20px;
+    border-top-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+    rotate: 45deg;
+    border-color: aquamarine;
+    border-style:hidden;
+    color: white;
+    padding-left: 5px;
+    padding-top: 25px;
+    padding-right: 10px;
+    padding-bottom: 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px; 
+    text-shadow: 1px 1px 2px mediumpurple, 0 0 1em mediumpurple, 0 0 0.2em cornflowerblue;
+    margin: 0 auto;
+    max-height: 125px;
+}
+#toolboxButton2 {
+    cursor: default; 
+    background-color: cornflowerblue; 
+    border-radius: 20px;
+    border-top-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+    rotate: 45deg;
+    border-color: aquamarine;
+    border-style:hidden;
+    color: white;
+    padding-left: 5px;
+    padding-top: 25px;
+    padding-right: 10px;
+    padding-bottom: 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px; 
+    text-shadow: 1px 1px 2px mediumpurple, 0 0 1em mediumpurple, 0 0 0.2em aquamarine;
+    margin: 0 auto;
+    max-height: 125px;
+}
+#toolboxtext1 {
+    writing-mode: vertical-rl;
+    text-orientation: sideways;
+    padding: 0px;
+    margin: 0px;
+    padding-bottom: 20px;
+    -moz-transform: scale(-1, -1);
+    -webkit-transform: scale(-1, -1);
+    -o-transform: scale(-1, -1);
+    -ms-transform: scale(-1, -1);
+    transform: scale(-1, -1);
+    float: left;
+    font-style: italic;
+    
+}
+#toolboxtext2 {
+    writing-mode: vertical-rl;
+    text-orientation: sideways;
+    padding: 0px;
+    margin: 0px;
+    padding-bottom: 0px;
+    -moz-transform: scale(-1, -1);
+    -webkit-transform: scale(-1, -1);
+    -o-transform: scale(-1, -1);
+    -ms-transform: scale(-1, -1);
+    transform: scale(-1, -1);
+    float: left;
+    font-style: italic;
+}
+
+#painttools {
+    float:left; 
+    margin:0 auto; 
+    width: 82%; 
+    height: fit-content;
+    font-family: cursive; 
+}
+#sSize{
+    font-family: inherit; 
+    width: 60px; 
+    background-color: beige;               
+    border: outset 3px aquamarine; 
+    text-shadow:none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 28px;
+}
+#styleForm{
+    padding: 0px; 
+    display: inline-block;
+    margin-right: 0px;
+    height: 40px;
+}
+
+#strokeStyles{
+    cursor: pointer; 
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow:none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+    font-family: inherit;
+}
+.styleOption{
+    background-color: aquamarine;
+}
+
+#toolbutton {
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow:none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+}
+#colorPicker{
+    cursor: pointer; 
+    margin: 0 auto;
+    margin-top: 0px;
+    margin-left: 0px;
+    padding: 0px;
+    display: inline-block;
+    border: none;
+    z-index: -5;
+}
+#toolbutton2 {
+    cursor: pointer; 
+    background-color: beige; 
+    border: outset 3px cornflowerblue; 
+    text-shadow:none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 28px;
+}
+#shapebutton {
+    cursor: pointer; 
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow:none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+}
+#endShapeButton{
+    cursor: pointer; 
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow: none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+}
+
+#circleButton{
+    cursor: pointer; 
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow: none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+}
+
+#clearbutton{
+    cursor: pointer; 
+    background-color: aquamarine; 
+    border: outset 3px aquamarine; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 15px;
+    height: 40px;
+}
+
+#imageEditor {
+    float:left; 
+    margin:0; 
+    width: 50%; 
+    height: fit-content;
+    font-family: cursive; 
+    margin-top: 10px; 
+    margin-bottom: 0px;
+}
+
+#paintEditor {
+    float:left; 
+    margin:0; 
+    width:50%; 
+    height: fit-content;
+    font-family: cursive; 
+    margin-top: 10px; 
+    margin-bottom: 0px;
+    
+    
+}
+
+#paintbox {
+    background-color: mediumpurple;
+    margin: 0 auto;
+    height: 576px;
+    padding-top: 32px;
+    margin-top: 0px;
+    border-top: 2px aquamarine dashed;
+}
+#paintdest {
+    margin: 0 auto;
+    margin-top: 0px;
+    height: 512px;
+    width: 768px;
+    background-color: beige;
+    border:1px solid #000000;
+}
