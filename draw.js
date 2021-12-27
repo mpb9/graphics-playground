@@ -98,18 +98,41 @@ clearCanvas.addEventListener("mousedown", function(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     //svg.removeChild(svgElement);
 
-    var numChildrenInShape = svgIndices[svgIndices.length -1] - svgIndices[svgIndices.length -2];
-
-    for(var i = svgChildID -1; i >= svgIndices[svgIndices.length - 2]; i--){
-        svg.removeChild(svg.childNodes[i]);
+    let stillErasing = svgChildID;
+    while(stillErasing != 0){
+        eraseLastShape();
+        stillErasing = svgChildID;
     }
-    var lastCID = svgIndices.pop();
-    
-    svgChildID = svgChildID - numChildrenInShape;
-    
-    ctx.beginPath();
 
 });
+
+
+let eraseShape = document.querySelector('#eraseLast');
+eraseShape.addEventListener("mousedown", eraseLastShape);
+
+function eraseLastShape(){
+    shapeTime = false;
+
+    p0.setX = null;
+    p0.setY = null;
+    cleared = 0;
+
+    //ctx.clearRect(0,0,canvas.width,canvas.height);
+    //svg.removeChild(svgElement);
+    if(svgChildID != 0){
+        var numChildrenInShape = svgIndices[svgIndices.length -1] - svgIndices[svgIndices.length -2];
+
+        for(var i = svgChildID -1; i >= svgIndices[svgIndices.length - 2]; i--){
+            svg.removeChild(svg.childNodes[i]);
+        }
+        var lastCID = svgIndices.pop();
+        
+        svgChildID = svgChildID - numChildrenInShape;
+    } 
+    ctx.beginPath();
+
+}
+
 
 svg.addEventListener("mousedown", function(e)
 {
