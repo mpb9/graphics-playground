@@ -1,6 +1,10 @@
 var cleared = 0;
 var shapeTime = false;
 var circleTime = false;
+var ms = 0;
+var svgChildID = 0;
+
+var svgIndices = new Array();
 
 var p0 = new Point(null, null);
 
@@ -14,13 +18,7 @@ ctx.beginPath();
 let svg = document.querySelector("#shapesvg");
 var svgPoints = new Array();
 
-let stopForCircle = document.querySelector("#circleButton");
-stopForCircle.addEventListener("mousedown", function(){
-    ctx.beginPath();
-    circleTime = true;
-    shapeTime = false;
-    cleared = 0;
-});
+var circlePoints = new Array();
 
 
 let strokeChange = document.getElementById('strokeStyles');
@@ -40,8 +38,16 @@ var svgShapeCount = 0;
 
 // var svgElement = document.createElementNS("http://www.w3.org/1999/xhtml", "pathShape");
 
-
 var canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+let stopForCircle = document.querySelector("#circleButton");
+stopForCircle.addEventListener("mousedown", function(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.beginPath();
+    circleTime = true;
+    shapeTime = false;
+    cleared = 0;
+});
 
 let stopForShape = document.querySelector('#shapebutton');
 stopForShape.addEventListener("mousedown", function(){
@@ -70,6 +76,9 @@ shapeDone.addEventListener("mousedown", function(){
 
         fillShape(svgPoints, svgPoints.length, canvas.height, canvas.width, ctx.strokeStyle, path);
 
+        if(svgChildID > svgIndices[svgIndices.length - 1]){
+            svgIndices[svgIndices.length] = svgChildID;
+        }
         p0.setX = null;
         p0.setY = null;
 
@@ -89,6 +98,15 @@ clearCanvas.addEventListener("mousedown", function(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     //svg.removeChild(svgElement);
 
+    var numChildrenInShape = svgIndices[svgIndices.length -1] - svgIndices[svgIndices.length -2];
+
+    for(var i = svgChildID -1; i >= svgIndices[svgIndices.length - 2]; i--){
+        svg.removeChild(svg.childNodes[i]);
+    }
+    var lastCID = svgIndices.pop();
+    
+    svgChildID = svgChildID - numChildrenInShape;
+    
     ctx.beginPath();
 
 });
@@ -98,17 +116,42 @@ svg.addEventListener("mousedown", function(e)
     let strokeColor = document.querySelector('#colorPicker');
     ctx.strokeStyle = strokeColor.value;
 
-    if(shapeTime){
+    if(shapeTime || circleTime){
 
         ctx.lineWidth = 1;
         ctx.strokeStyle = 'rgba(0, 0, 0, 0.4)';
 
         if(cleared == 0){
             p0 = makePoint(e.layerX,e.layerY);
-            createNewShape(canvas.height, canvas.width, p0, ctx);
+            if(shapeTime){
+                createNewShape(canvas.height, canvas.width, p0, ctx);
+            } else {
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.9)';
+                ctx.moveTo(p0.x-2,p0.y);
+                ctx.lineWidth = 4;
+                ctx.lineTo(p0.x+2, p0.y);
+                ctx.stroke();
+                cleared = 1;
+            }
         } else {
             let p = makePoint(e.layerX, e.layerY);
-            drawShape(canvas, canvas.height, canvas.width, p, ctx, cleared);
+            if(shapeTime){
+                drawShape(canvas, canvas.height, canvas.width, p, ctx, cleared);
+            } else {
+                ctx.lineTo(p.x, p.y);
+                ctx.stroke();
+
+                circlePoints = addCircle(p0, Math.sqrt((p.x - p0.x)**2 + (p.y - p0.y)**2));
+
+                ctx.strokeStyle = strokeColor.value;
+
+                fillShape(circlePoints, circlePoints.length, canvas.height, canvas.width, ctx.strokeStyle, "quadratic");
+                circleTime = false;
+
+                if(svgChildID > svgIndices[svgIndices.length - 1]){
+                    svgIndices[svgIndices.length] = svgChildID;
+                }
+            }
         }
         
 
@@ -193,7 +236,7 @@ function fillShape(pts, count, height, width, color, path){
     } else if(path == "quadratic"){
         for(var i = 0; i<ptsSize-2; i+=2){
             var ptsQ = [pts[i], pts[i+1], pts[i+2]];
-            quadClip(ptsQ, edges);
+            quadClip(ptsQ, edges, height, width);
             
         }
         if(ptsSize % 2 == 0){
@@ -224,7 +267,7 @@ function fillShape(pts, count, height, width, color, path){
     var x0; 
     var x1;
 
-    for(var y = GRoundToInt(edges[0].top.fY); y < height; y++){
+    for(var y = GRoundToInt(edges[0].top.fY); y <= height; y++){
 
         for(var i = 0; i < size; i++){
             if(GRoundToInt(edges[i].top.fY) <= y && GRoundToInt(edges[i].bottom.fY) > y){
@@ -247,7 +290,10 @@ function fillShape(pts, count, height, width, color, path){
                 var shapeColor = color;
                 //testing
                 //if(path != "quadratic"){
-                    fillIt(x0, x1, y, shapeColor);
+
+                //slowFill;
+
+                fillIt(x0, x1, y, shapeColor);
                 //}
             }
         }
@@ -267,18 +313,43 @@ function fillShape(pts, count, height, width, color, path){
 }
 
 function fillIt(x0, x1, y, shapeColor){
-    const shade = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "rect",
-    );
-    shade.setAttribute("x", x0.toString());
-    shade.setAttribute("y", y.toString());
-    shade.setAttribute("height", "1");
-    shade.setAttribute("width", (x1-x0).toString());
-    shade.setAttribute("fill", shapeColor.toString());
 
-    svg.appendChild(shade);
+    x0 = clamp(x0, canvas.width);
+    x1 = clamp(x1, canvas.width);
 
+    let opacity = document.querySelector('#opacity');
 
+    if(opacity.value == ""){
+        opacity = 1.0;
+    } else {
+        opacity = opacity.valueAsNumber / 100;
+    }
+
+    if(y > 0 && y <= canvas.height){
+        if(svgChildID == 0){
+            svgIndices[svgIndices.length] = 0;
+        }
+
+        const shade = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "rect",
+        );
+        shade.setAttribute("x", x0.toString());
+        shade.setAttribute("y", y.toString());
+        shade.setAttribute("height", "1");
+        shade.setAttribute("width", (x1-x0).toString());
+        shade.setAttribute("fill", shapeColor.toString());
+        shade.setAttribute("fill-opacity", opacity.toString());
+        shade.setAttribute("id", svgChildID.toString());
+            
+        svg.appendChild(shade);
+
+        svgChildID++;
+    }
+    
 }
 
+
+function slowFill(){
+    ms++;
+}

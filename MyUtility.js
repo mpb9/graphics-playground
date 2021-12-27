@@ -18,3 +18,6 @@ const GCeilToInt = (x) => {
 const GPinToUnit = (x) => {
     return Math.max(0.0, Math.min(1.0, x));
 }
+const clamp = (x, max) => {
+    return Math.max(1.0, Math.min(x, max));
+}

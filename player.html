@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="player.css">
     <script type="text/javascript" src="MyUtility.js"></script>
     <script type="text/javascript" src="models/point.js"></script>
+    <script type="text/javascript" src="models/path.js"></script>
     <script type="text/javascript" src="models/edge.js"></script>
 </head>
 <body id='pageBody'>
@@ -24,6 +25,8 @@
 
                         <input type="number" id="sSize" name="sSize" step="1" placeholder="Width" min="1" max="99" >
                         
+                        <input type="number" id="opacity" name="opacity" step="1" placeholder="Opacity" min="0" max="99" >
+
                         <form id="styleForm">
                             <select name="pathType" class="strokeStyles" id="strokeStyles" autocomplete="off">
                                 <option class="styleOption" value = "linear" selected>linear</option>
@@ -49,9 +52,12 @@
                         
                         </button>
 
+                        <button id='eraseLast' style="font-family: inherit;"> Erase Last 
+                        
+                        </button>
                         
 
-                        <button id='clearbutton' style="font-family: inherit;"> Clear 
+                        <button id='clearbutton' style="font-family: inherit;"> Clear
                         
                         </button>
                             
@@ -103,7 +109,7 @@
         </div>
         <div id='paintbox'>
             <img id="output" width="200" style="cursor: pointer; position: absolute;"/> 
-            <svg id="shapesvg" width="768" height="512" style="position: absolute;"></svg>
+            <svg id="shapesvg" width="769" height="513" style="position: absolute;"></svg>
             <canvas id="paintdest">
                 
             </canvas>

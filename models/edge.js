@@ -195,6 +195,96 @@ const yClip = (edge, height) => {
     return new Edge(pntA, pntB, edge.winder, 0.0);
 } 
 
+const clipEdges = (tPntA, tPntB, height, width, clippedEdges) =>{ 
+    var w = 1;
+
+    // Ensure p0.y <= p1.y
+    if (tPntA.fY > tPntB.fY) {
+        swap(tPntA, tPntB);
+        w = -w;
+    }
+    
+    if ((tPntA.y < height) && (tPntB.y > 0) && (tPntB.y != tPntA.y)){
+        var newEdge = makeEdge(tPntA, tPntB,w);
+        var tempEdge = yClip(newEdge, height);
+        if (!(tempEdge.pointA.x < 0 && tempEdge.pointB.x < 0) 
+                && !(tempEdge.pointA.x > width && tempEdge.pointB.x > width)){ //? check
+            if(tempEdge.pointA.x > tempEdge.pointB.x){
+                var tP = tempEdge.pointA;
+                tempEdge.pointA = tempEdge.pointB;
+                tempEdge.pointB = tP;
+                tempEdge.winder = -tempEdge.winder;
+            }
+            // add left projection, clip left side
+            if(tempEdge.pointA.x < 0){
+                var aY = (tempEdge.pointA.y + (0 - tempEdge.pointA.x) * 
+                            (tempEdge.pointB.y - tempEdge.pointA.y)/(tempEdge.pointB.x - tempEdge.pointA.x));
+                var lProj = makeEdge(makePoint(0, aY), makePoint(0, tempEdge.pointA.y), tempEdge.winder);
+                if(lProj.pointA.y > lProj.pointB.y){
+                    var tP = lProj.pointA;
+                    lProj.pointA = lProj.pointB;
+                    lProj.pointB = tP;
+                    lProj.winder = -lProj.winder;
+                }
+                clippedEdges[clippedEdges.length] = lProj;
+                tempEdge.pointA.setX(0);
+                tempEdge.pointB.setY(aY);
+            }
+            // add right projection, clip right side
+            if(tempEdge.pointB.x > width){
+                var bY = (tempEdge.pointB.y - (tempEdge.pointB.x - width) * 
+                            (tempEdge.pointB.y - tempEdge.pointA.y)/(tempEdge.pointB.x - tempEdge.pointA.x));
+                var rProj = makeEdge(makePoint(width, bY), makePoint(width, tempEdge.pointB.y), tempEdge.winder);
+                if(rProj.pointA.y > rProj.pointB.y){
+                    var tP = rProj.pointA;
+                    rProj.pointA = rProj.pointB;
+                    rProj.pointB = tP;
+                    rProj.winder = -rProj.winder;
+                }
+                clippedEdges[clippedEdges.length] = rProj;
+                tempEdge.pointB.setX(width); 
+                tempEdge.pointB.setY(bY);
+            }
+            //add the clipped segment
+            var edgeC = tempEdge;
+            if(edgeC.pointA.y > edgeC.pointB.y){
+                    var tPop = edgeC.pointA;
+                    edgeC.pointA = edgeC.pointB;
+                    edgeC.pointB = tPop;
+                    edgeC.winder = -edgeC.winder;
+            }
+            clippedEdges[clippedEdges.length] = edgeC;
+        } else {
+            if(tempEdge.pointA.x > tempEdge.pointB.x){
+                var tP = tempEdge.pointA;
+                tempEdge.pointA = tempEdge.pointB;
+                tempEdge.pointB = tP;
+                tempEdge.winder = -tempEdge.winder;
+            }
+            if (tempEdge.pointB.x < 0){
+                var lOut = makeEdge(makePoint(0, tempEdge.pointA.y), makePoint(0, tempEdge.pointB.y), tempEdge.winder);
+                if(lOut.pointA.y > lOut.pointB.y){
+                    var tPo = lOut.pointA;
+                    lOut.pointA = lOut.pointB;
+                    lOut.pointB = tPo;
+                    lOut.winder = -lOut.winder;
+                }
+                clippedEdges[clippedEdges.length] = lOut;
+            }
+            if (tempEdge.pointA.x > width){
+                var rOut = makeEdge(makePoint(width, tempEdge.pointA.y), makePoint(width, tempEdge.pointB.y), tempEdge.winder);
+                if(rOut.pointA.y > rOut.pointB.y){
+                    var tPoi = rOut.pointA;
+                    rOut.pointA = rOut.pointB;
+                    rOut.pointB = tPoi;
+                    rOut.winder = -rOut.winder;
+                }
+                clippedEdges[clippedEdges.length] = rOut;
+            }
+        }
+    }
+}
+
 const edgeSort = (edge1, edge2) =>{
     let pntA = edge1.pointA;
     let pntB = edge1.pointB;
@@ -245,14 +335,14 @@ const edgeSortByX = (edge1, edge2) => {
 }
 
 
-const quadClip = (src /*[3]*/, edges) => {
+const quadClip = (src /*[3]*/, edges, height, width) => {
     var errorP = makePoint(((src[0].fX - 2*src[1].fX + src[2].fX)/4), 
                                 ((src[0].fY - 2*src[1].fY + src[2].fY)/4));
     var error = Math.sqrt((errorP.fX * errorP.fX) + (errorP.fY * errorP.fY));
 
     if (error <= 0.25){
+        //clipEdges(src[0], src[2], height, width, edges);
         edges[edges.length] = makeEdge(src[0], src[2], 1);
-        // edges[edges.length] = makeEdge(src[1], src[2], 1);
     } else { 
         var callbase = (-2)*Math.log(2);
         var numChops = GCeilToInt(Math.log((0.25)/error) / callbase);
@@ -264,6 +354,8 @@ const quadClip = (src /*[3]*/, edges) => {
             var choptX = (1-t)*(1-t)*src[0].fX + 2*(1-t)*t*src[1].fX + t*t*src[2].fX;
             var choptY = (1-t)*(1-t)*src[0].fY + 2*(1-t)*t*src[1].fY + t*t*src[2].fY;
             qPoints[qPoints.length] = makePoint(choptX, choptY);
+            //clipEdges(qPoints[i], qPoints[i+1], height, width, edges);
+
             edges[edges.length] = makeEdge(qPoints[i], qPoints[i+1], 1);
         }
         qPoints = [];
@@ -302,93 +394,3 @@ const cubicClip = (src /*[4]*/, edges) => {
         cPoints = [];
     }
 }
-
-/*
-const clipEdges = (GPoint tPntA, GPoint tPntB, int height, int width, std::vector<Edge>& clippedEdges) =>{ 
-    int w = 1;
-
-    // Ensure p0.y <= p1.y
-    if (tPntA.fY > tPntB.fY) {
-        std::swap(tPntA, tPntB);
-        w = -w;
-    }
-    
-    if ((tPntA.y() < height) && (tPntB.y() > 0) && (tPntB.y() != tPntA.y())){
-        Edge newEdge = Edge::Make(tPntA, tPntB,w);
-        Edge tempEdge = yClip(newEdge, height);
-        if (!(tempEdge.pointA.x() < 0 && tempEdge.pointB.x() < 0) 
-                && !(tempEdge.pointA.x() > width && tempEdge.pointB.x() > width)){ //? check
-            if(tempEdge.pointA.x() > tempEdge.pointB.x()){
-                GPoint tP = tempEdge.pointA;
-                tempEdge.pointA = tempEdge.pointB;
-                tempEdge.pointB = tP;
-                tempEdge.winder = -tempEdge.winder;
-            }
-            // add left projection, clip left side
-            if(tempEdge.pointA.x() < 0){
-                float aY = (tempEdge.pointA.y() + (0 - tempEdge.pointA.x()) * 
-                            (tempEdge.pointB.y() - tempEdge.pointA.y())/(tempEdge.pointB.x() - tempEdge.pointA.x()));
-                Edge lProj = Edge::Make(GPoint::Make(0, aY), GPoint::Make(0, tempEdge.pointA.y()), tempEdge.winder);
-                if(lProj.pointA.y() > lProj.pointB.y()){
-                    GPoint tP = lProj.pointA;
-                    lProj.pointA = lProj.pointB;
-                    lProj.pointB = tP;
-                    lProj.winder = -lProj.winder;
-                }
-                clippedEdges.push_back(lProj);
-                tempEdge.pointA.set(0, aY);
-            }
-            // add right projection, clip right side
-            if(tempEdge.pointB.x() > width){
-                float bY = (tempEdge.pointB.y() - (tempEdge.pointB.x() - width) * 
-                            (tempEdge.pointB.y() - tempEdge.pointA.y())/(tempEdge.pointB.x() - tempEdge.pointA.x()));
-                Edge rProj = Edge::Make(GPoint::Make(width, bY), GPoint::Make(width, tempEdge.pointB.y()), tempEdge.winder);
-                if(rProj.pointA.y() > rProj.pointB.y()){
-                    GPoint tP = rProj.pointA;
-                    rProj.pointA = rProj.pointB;
-                    rProj.pointB = tP;
-                    rProj.winder = -rProj.winder;
-                }
-                clippedEdges.push_back(rProj);
-                tempEdge.pointB.set(width, bY);
-            }
-            //add the clipped segment
-            Edge edgeC = tempEdge;
-            if(edgeC.pointA.y() > edgeC.pointB.y()){
-                    GPoint tPop = edgeC.pointA;
-                    edgeC.pointA = edgeC.pointB;
-                    edgeC.pointB = tPop;
-                    edgeC.winder = -edgeC.winder;
-            }
-            clippedEdges.push_back(edgeC);
-        } else {
-            if(tempEdge.pointA.x() > tempEdge.pointB.x()){
-                GPoint tP = tempEdge.pointA;
-                tempEdge.pointA = tempEdge.pointB;
-                tempEdge.pointB = tP;
-                tempEdge.winder = -tempEdge.winder;
-            }
-            if (tempEdge.pointB.x() < 0){
-                Edge lOut = Edge::Make(GPoint::Make(0, tempEdge.pointA.y()), GPoint::Make(0, tempEdge.pointB.y()), tempEdge.winder);
-                if(lOut.pointA.y() > lOut.pointB.y()){
-                    GPoint tPo = lOut.pointA;
-                    lOut.pointA = lOut.pointB;
-                    lOut.pointB = tPo;
-                    lOut.winder = -lOut.winder;
-                }
-                clippedEdges.push_back(lOut);
-            }
-            if (tempEdge.pointA.x() > width){
-                Edge rOut = Edge::Make(GPoint::Make(width, tempEdge.pointA.y()), GPoint::Make(width, tempEdge.pointB.y()), tempEdge.winder);
-                if(rOut.pointA.y() > rOut.pointB.y()){
-                    GPoint tPoi = rOut.pointA;
-                    rOut.pointA = rOut.pointB;
-                    rOut.pointB = tPoi;
-                    rOut.winder = -rOut.winder;
-                }
-                clippedEdges.push_back(rOut);
-            }
-        }
-    }
-}
-*/
