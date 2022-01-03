@@ -6,5 +6,5 @@
     "windows": {
         "command": "explorer.exe"
     },
-    "args": ["player.html"]
+    "args": ["index.html"]
 }
