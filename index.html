@@ -10,24 +10,24 @@
     <title>Mike's Graphics</title>
 </head>
 <body id='pageBody'>
-    
     <div id='bounceContainer'>
         <h4>Michael Beebe's Graphic Playground</h4>
     </div>
-
     <div id='canvas-containter'>
         <div  id='canvas-info'>
-            
                 <div style="float: left; margin:0; width: 9%;">
                     <button id='toolboxButton'> <p id='toolboxtext1'> tool </p> <p id='toolboxtext2'> box </p> </button>
                 </div>
                 <div id='painttools'>
-
                     <div id='paintEditor'>
 
-                        <input type="number" id="sSize" name="sSize" step="1" placeholder="Width" min="1" max="99" >
+                        <button id='toolbutton' style="font-family: inherit;"> color 
+                            <input type="color" id="colorPicker" name="colorPicker" title="select" placeholder="" value="#ff0000"/>
+                        </button>
+
+                        <input type="number" id="sSize" name="sSize" step="1" placeholder="width" min="1" max="99" >
                         
-                        <input type="number" id="opacity" name="opacity" step="1" placeholder="Opacity" min="0" max="99" >
+                        <input type="number" id="opacity" name="opacity" step="1" placeholder="opacity" min="0" max="99" >
 
                         <form id="styleForm">
                             <select name="pathType" class="strokeStyles" id="strokeStyles" autocomplete="off">
@@ -36,30 +36,37 @@
                                 <option class="styleOption" value = "cubic">cubic</option>
                             </select>
                         </form>
-                        
-                        
-                            <button id='toolbutton' style="font-family: inherit;"> Color 
-                                <input type="color" id="colorPicker" name="colorPicker" title="select" placeholder="" value="#ff0000"/>
-                            </button>
-                        
-                        <button id='circleButton' style="font-family: inherit;"> Circle 
+
+                        <form id="styleForm">
+                            <select name="capType" class="capStyles" id="capStyles" autocomplete="off">
+                                <option class="capOption" value = "butt" selected>no cap</option>
+                                <option class="capOption" value = "square">square</option>
+                                <option class="capOption" value = "round">round</option>
+                            </select>
+                        </form>
+
+                        <button id='endLinesButton' style="font-family: inherit;"> new path 
                         
                         </button>
                         
-                        <button id='shapebutton' style="font-family: inherit;"> Draw Shape 
+                        <button id='circleButton' style="font-family: inherit;"> circle 
+                        
+                        </button>
+                        
+                        <button id='shapebutton' style="font-family: inherit;"> draw shape 
                         
                         </button>
 
-                        <button id='endShapeButton' style="font-family: inherit;"> End Shape 
+                        <button id='endShapeButton' style="font-family: inherit;"> end shape 
                         
                         </button>
 
-                        <button id='eraseLast' style="font-family: inherit;"> Erase Last 
+                        <button id='eraseLast' style="font-family: inherit;"> erase last 
                         
                         </button>
                         
 
-                        <button id='clearbutton' style="font-family: inherit;"> Clear
+                        <button id='clearbutton' style="font-family: inherit;"> clear
                         
                         </button>
                             
@@ -70,7 +77,7 @@
 
                     <div id='imageEditor'>
                         
-                        <label for="file" id="toolbutton2">Add Image
+                        <label for="file" id="toolbutton2">add image
                             <input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: none; margin-top: 0px;">
                         </label>
 

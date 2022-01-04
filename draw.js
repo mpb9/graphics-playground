@@ -1,31 +1,53 @@
-var cleared = 0;
+
+// make an option for the type of butt a line should have
+
+// check if first point
+var cleared = 0; 
+
+// check what shape to draw
 var shapeTime = false;
 var circleTime = false;
-var ms = 0;
-var svgChildID = 0;
 
+// milliseconds for slowFill
+var ms = 0;
+
+// IDs for svg shapes
+var svgChildID = 0;
 var svgIndices = new Array();
 
+// first point of circle or polygon
 var p0 = new Point(null, null);
 
+// vars for svg lines
+var svgLineWidth = 1;
+var lineP0 = new Point(null, null);
+var linePoints = new Array();
+
+// general canvas info
 let canvas = document.querySelector("#paintdest");
 canvas.height = 512;
 canvas.width= 770;
 
+// canvas drawer
 let ctx = canvas.getContext('2d');
 ctx.beginPath();
 
+// svg drawer and points in svg circle or polygon
 let svg = document.querySelector("#shapesvg");
 var svgPoints = new Array();
-
 var circlePoints = new Array();
 
-
+// listener for stroke type (linear, quadratic, cubic)
 let strokeChange = document.getElementById('strokeStyles');
-function getSelectedOption(strokeChange) {
+
+// listener for cap type (butt, square, round)
+let capChange = document.getElementById('capStyles');
+
+// checks the selected option in stroke/cap style form
+function getSelectedOption(someChange) {
     var pathGeo;
-    for ( var i = 0, len = strokeChange.options.length; i < len; i++ ) {
-        pathGeo = strokeChange.options[i];
+    for ( var i = 0, len = someChange.options.length; i < len; i++ ) {
+        pathGeo = someChange.options[i];
         if ( pathGeo.selected === true ) {
             break;
         }
@@ -33,13 +55,24 @@ function getSelectedOption(strokeChange) {
     return pathGeo.value;
 }
 
+//these appear unneeded rn
+/*
 var svgShapeCount = 0; 
-//const svgShapes = new Array();
 
-// var svgElement = document.createElementNS("http://www.w3.org/1999/xhtml", "pathShape");
+const svgShapes = new Array();
+
+var svgElement = document.createElementNS("http://www.w3.org/1999/xhtml", "pathShape");
 
 var canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+*/
 
+//end lines button has been pressed
+let linesDone = document.querySelector('#endLinesButton');
+linesDone.addEventListener("mousedown", function(){
+    cleared = 0;
+});
+
+//circle button has been pressed
 let stopForCircle = document.querySelector("#circleButton");
 stopForCircle.addEventListener("mousedown", function(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -49,6 +82,7 @@ stopForCircle.addEventListener("mousedown", function(){
     cleared = 0;
 });
 
+//polygon button has been pressed
 let stopForShape = document.querySelector('#shapebutton');
 stopForShape.addEventListener("mousedown", function(){
     ctx.beginPath();
@@ -57,6 +91,7 @@ stopForShape.addEventListener("mousedown", function(){
     cleared = 0;
 });
 
+//end polygon button has been pressed, calls getSelectedOption(strokeChange)
 let shapeDone = document.querySelector('#endShapeButton');
 shapeDone.addEventListener("mousedown", function(){
     shapeTime = false;
@@ -87,6 +122,7 @@ shapeDone.addEventListener("mousedown", function(){
 
 });
 
+//clear button has been pressed
 let clearCanvas = document.querySelector('#clearbutton');
 clearCanvas.addEventListener("mousedown", function(){
     shapeTime = false;
@@ -106,10 +142,11 @@ clearCanvas.addEventListener("mousedown", function(){
 
 });
 
-
+//erase last shape button has been pressed
 let eraseShape = document.querySelector('#eraseLast');
 eraseShape.addEventListener("mousedown", eraseLastShape);
 
+//function for erasing last shape (called mult times in clear)
 function eraseLastShape(){
     shapeTime = false;
 
@@ -133,7 +170,7 @@ function eraseLastShape(){
 
 }
 
-
+//svg has been clicked... checks for shapes, lines, etc
 svg.addEventListener("mousedown", function(e)
 {
     let strokeColor = document.querySelector('#colorPicker');
@@ -149,7 +186,7 @@ svg.addEventListener("mousedown", function(e)
             if(shapeTime){
                 createNewShape(canvas.height, canvas.width, p0, ctx);
             } else {
-                ctx.strokeStyle = 'rgba(0, 0, 0, 0.9)';
+                ctx.strokeStyle = strokeColor.value;
                 ctx.moveTo(p0.x-2,p0.y);
                 ctx.lineWidth = 4;
                 ctx.lineTo(p0.x+2, p0.y);
@@ -203,29 +240,67 @@ svg.addEventListener("mousedown", function(e)
         
         if(strokeSize.valueAsNumber === NaN){
             ctx.lineWidth = 1;
+            svgLineWidth = 1;
         } else {
-            ctx.lineWidth = Math.min(33, Math.max(1, (strokeSize.valueAsNumber) / 3));
+            ctx.lineWidth = Math.min(50, Math.max(1, (strokeSize.valueAsNumber) / 2));
+            svgLineWidth = ctx.lineWidth;
         }
+
+        //add a "done" button to and a line stroke or just change end shape to include lines?
         
-        addPathClick(canvas, e, ctx);
+        addPathClick(canvas, e, ctx, svgLineWidth);
     }
     
 });
 
-function addPathClick(canvas, event, ctx){
+//used only for drawing path
+function addPathClick(canvas, event, ctx, svgLineWidth){
 
     var x = event.layerX;
     var y = event.layerY;
 
     if(cleared == 0) {
-        ctx.moveTo(x, y);       
+        ctx.moveTo(x, y);
+        lineP0 = makePoint(x,y);       
         cleared = 1; 
-    }
-    else {
+    } else {
         ctx.lineTo(x, y);
-        ctx.stroke();
+        ctx.stroke();      
+        
+        var capy = getSelectedOption(capChange);
+
+        linePoints = addLine(lineP0, makePoint(x,y), svgLineWidth, capy);
+
+        fillShape(linePoints[0], linePoints[0].length, canvas.height, canvas.width, ctx.strokeStyle, "linear");
+
+        if(svgChildID > svgIndices[svgIndices.length - 1]){
+            svgIndices[svgIndices.length] = svgChildID;
+        }
+
+        if(capy == "round"){
+            fillShape(linePoints[1], linePoints[1].length, canvas.height, canvas.width, ctx.strokeStyle, "quadratic");
+
+            if(svgChildID > svgIndices[svgIndices.length - 1]){
+                svgIndices[svgIndices.length] = svgChildID;
+            }
+
+            fillShape(linePoints[2], linePoints[2].length, canvas.height, canvas.width, ctx.strokeStyle, "quadratic");
+
+            if(svgChildID > svgIndices[svgIndices.length - 1]){
+                svgIndices[svgIndices.length] = svgChildID;
+            }
+
+        }
+
+        lineP0 = makePoint(x,y);
+        cleared = 1;
+
+        
+
+        linePoints = [];
     }
 }
+
 
 function createNewShape(height, width, p0, ctx){
     ctx.moveTo(p0.x, p0.y);

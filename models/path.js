@@ -58,3 +58,65 @@ function addCircle( center, radius){
 
     return myCircle;
 }
+
+function addLine( pA, pB, w, cap){
+    var abX = pB.fX - pA.fX;
+    var abY = pB.fY - pA.fY;
+    var len = Math.sqrt(abX*abX + abY*abY);
+    var rad = w / 2;
+
+    var x = abX * rad / len;
+    var y = abY * rad / len;
+
+    var xT = y;
+    var yT = -x;
+
+    //if(cap == kButt){
+
+    const ptsButt = new Array();
+    ptsButt[0] = makePoint(pA.fX + xT, pA.fY + yT);
+    ptsButt[1] = makePoint(pB.fX + xT, pB.fY + yT);
+    ptsButt[2] = makePoint(pB.fX - xT, pB.fY - yT);
+    ptsButt[3] = makePoint(pA.fX - xT, pA.fY - yT);
+    
+    const returner = new Array();
+    if(cap == "butt"){
+        //path->addPolygon(ptsButt, 4);
+        returner[0] = ptsButt;
+        return returner;
+    }else if(cap == "round"){
+            
+        returner[0] = ptsButt;
+        returner[1] = addCircle(makePoint((ptsButt[0].fX + ptsButt[3].fX)/2, (ptsButt[0].fY + ptsButt[3].fY)/2), w/2);
+        returner[2] = addCircle(makePoint((ptsButt[1].fX + ptsButt[2].fX)/2, (ptsButt[1].fY + ptsButt[2].fY)/2), w/2);
+        return returner;
+        
+            /*
+                [...ptsButt, 
+                ...addCircle(makePoint((ptsButt[0].fX + ptsButt[3].fX)/2, (ptsButt[0].fY + ptsButt[3].fY)/2), w/2),
+                ...addCircle(makePoint((ptsButt[1].fX + ptsButt[2].fX)/2, (ptsButt[1].fY + ptsButt[2].fY)/2), w/2)];
+            */
+            //path->addCircle(GPoint::Make((ptsButt[0].fX + ptsButt[3].fX)/2, (ptsButt[0].fY + ptsButt[3].fY)/2), w/2, GPath::kCW_Direction);
+        
+            //path->addCircle(GPoint::Make((ptsButt[1].fX + ptsButt[2].fX)/2, (ptsButt[1].fY + ptsButt[2].fY)/2), w/2, GPath::kCW_Direction);
+        
+    } else if (cap == "square"){
+        var BX1 = ptsButt[1].fX - ptsButt[2].fX;
+        var BY1 = ptsButt[1].fY - ptsButt[2].fY;
+        var lenB = Math.sqrt(BX1*BX1 + BY1*BY1);
+        var xB1 = BX1 * rad / lenB;
+        var yB1 = BY1 * rad / lenB;
+        var xBT1 = yB1;
+        var yBT1 = -xB1;
+       
+        const ptsB1Add = new Array();
+        ptsB1Add[0] = makePoint(pA.fX + xT + xBT1, pA.fY + yT + yBT1);
+        ptsB1Add[1] = makePoint(pB.fX + xT - xBT1, pB.fY + yT - yBT1);
+        ptsB1Add[2] = makePoint(pB.fX - xT - xBT1, pB.fY - yT - yBT1);
+        ptsB1Add[3] = makePoint(pA.fX - xT + xBT1, pA.fY - yT + yBT1);
+
+        // path->addPolygon(ptsB1Add, 4);
+        returner[0] = ptsB1Add;
+        return returner;
+    } 
+}

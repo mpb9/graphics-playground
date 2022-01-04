@@ -53,7 +53,9 @@ window.addEventListener('load', () => {
       
       balls.forEach(ball => ball.move())
 
-      requestAnimationFrame(advance)
+      //commented out for now just to reduce the drain on the server
+      
+      //requestAnimationFrame(advance)
       
       
       

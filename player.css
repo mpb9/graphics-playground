@@ -183,6 +183,22 @@ h5{
     background-color: aquamarine;
 }
 
+#capStyles{
+    cursor: pointer; 
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow:none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+    font-family: inherit;
+}
+.capOption{
+    background-color: aquamarine;
+}
+
 #toolbutton {
     background-color: beige; 
     border: outset 3px aquamarine; 
@@ -237,6 +253,18 @@ h5{
     height: 40px;
 }
 
+#endLinesButton{
+    cursor: pointer; 
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow: none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+}
+
 #circleButton{
     cursor: pointer; 
     background-color: beige; 
@@ -276,7 +304,7 @@ h5{
 #imageEditor {
     float:left; 
     margin:0; 
-    width: 50%; 
+    width: 35%; 
     height: fit-content;
     font-family: cursive; 
     margin-top: 10px; 
@@ -286,7 +314,7 @@ h5{
 #paintEditor {
     float:left; 
     margin:0; 
-    width:50%; 
+    width:65%; 
     height: fit-content;
     font-family: cursive; 
     margin-top: 10px; 
