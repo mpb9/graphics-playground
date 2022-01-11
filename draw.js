@@ -1,6 +1,6 @@
-
-// make an option for the type of butt a line should have
-
+window.addEventListener('load', function(){
+    openForm();
+});
 // check if first point
 var cleared = 0; 
 
@@ -65,6 +65,8 @@ var svgElement = document.createElementNS("http://www.w3.org/1999/xhtml", "pathS
 
 var canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 */
+
+
 
 //end lines button has been pressed
 let linesDone = document.querySelector('#endLinesButton');
@@ -365,7 +367,7 @@ function fillShape(pts, count, height, width, color, path){
     var x0; 
     var x1;
 
-    for(var y = GRoundToInt(edges[0].top.fY); y <= height; y++){
+    for(var y = GRoundToInt(edges[0].top.fY); y <= height; y+= 0.5){
 
         for(var i = 0; i < size; i++){
             if(GRoundToInt(edges[i].top.fY) <= y && GRoundToInt(edges[i].bottom.fY) > y){

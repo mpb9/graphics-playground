@@ -4,14 +4,112 @@
     <link rel="icon" href="logo1.jpg">
     <link rel="stylesheet" href="player.css">
     <script type="text/javascript" src="MyUtility.js"></script>
+    <script type="text/javascript" src="models/matrix.js"></script>
     <script type="text/javascript" src="models/point.js"></script>
+    <script type="text/javascript" src="models/pixel.js"></script>
+    <script type="text/javascript" src="models/bitmap.js"></script>
     <script type="text/javascript" src="models/path.js"></script>
     <script type="text/javascript" src="models/edge.js"></script>
     <title>Mike's Graphics</title>
 </head>
 <body id='pageBody'>
+    <div class="form-popup" id="myForm">
+        <form action="/action_page.php" class="form-container">
+            <h1 style="margin-top: 0px;">About:</h1>
+            <table style="width: 100%;">
+                <tr>
+                    <th>Drawing Paths:
+                        <p style="font-weight: lighter;">
+                            draw lines between the clicks on canvas
+                        </p>
+                    </th>
+                    
+                    <td>New Path: 
+                        <p>
+                            lines will continue to connect as you click until you click this
+                        </p>
+                    </td>
+                    <td>Width: 
+                        <p>
+                            set width of lines (1-99)
+                        </p>
+                    </td>
+                    <td>Cap: 
+                        <p>
+                            choose whether lines in your path will stop immediately, be rounded, or be squared
+                        </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Shading:</th>
+                    <td>Colors: 
+                        <p>
+                            set color of shapes and lines
+                        </p>
+                    </td>
+                    <td>Opacity: 
+                        <p>
+                            set opacity of shapes and lines (0-99)
+                        </p>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th>Shapes:
+                        <p style="font-weight: lighter;">
+                            click "draw shape" and draw lines as if drawing a path, and "end shape" to fill it with your color!
+                        </p>
+                    </th>
+                    <td>Curves: 
+                        <p>
+                            choose whether you'd like the shape to connect your points with quadratic/cubic curves (or just basic linear edges)
+                        </p>
+                    </td>
+                    <td>Circle: 
+                        <p>
+                            bit different.. just click a point on your canvas as the center and click again to set the radius
+                        </p>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th>Erasers:</th>
+                    <td>Erase Last: 
+                        <p>
+                            remove most recently added shape/line from your canvas
+                        </p>
+                    </td>
+                    <td>Clear: 
+                        <p>
+                            removes everything you've created from the canvas (except for an image just in case you want to keep the background)
+                        </p>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th>Images:</th>
+                    <td>Add Image: 
+                        <p>
+                            choose an image file to add to your canvas
+                        </p>
+                    </td>
+                    <td>Erase Image: 
+                        <p>
+                            just in case you do not want to keep the background after all
+                        </p>
+                    </td>
+                    <td>
+                        
+                    </td>
+                  </tr>
+            </table>
+            
+
+            <button type="button" class="cancel" onclick="closeForm()">okay!</button>
+        </form>
+    </div>
     <div id='bounceContainer'>
-        <h4>Michael Beebe's Graphic Playground</h4>
+        <h4 style="margin-bottom: 10px;">Michael Beebe's Graphic Playground</h4>
     </div>
     <div id='canvas-containter'>
         <div  id='canvas-info'>
@@ -30,6 +128,14 @@
                         <input type="number" id="opacity" name="opacity" step="1" placeholder="opacity" min="0" max="99" >
 
                         <form id="styleForm">
+                            <select name="capType" class="capStyles" id="capStyles" autocomplete="off">
+                                <option class="capOption" value = "butt" selected>no cap</option>
+                                <option class="capOption" value = "square">square</option>
+                                <option class="capOption" value = "round">round</option>
+                            </select>
+                        </form>
+
+                        <form id="styleForm">
                             <select name="pathType" class="strokeStyles" id="strokeStyles" autocomplete="off">
                                 <option class="styleOption" value = "linear" selected>linear</option>
                                 <option class="styleOption" value = "quadratic">quadratic</option>
@@ -37,13 +143,7 @@
                             </select>
                         </form>
 
-                        <form id="styleForm">
-                            <select name="capType" class="capStyles" id="capStyles" autocomplete="off">
-                                <option class="capOption" value = "butt" selected>no cap</option>
-                                <option class="capOption" value = "square">square</option>
-                                <option class="capOption" value = "round">round</option>
-                            </select>
-                        </form>
+                        
 
                         <button id='endLinesButton' style="font-family: inherit;"> new path 
                         
@@ -70,6 +170,8 @@
                         
                         </button>
                             
+                        <button class="open-button" onclick="openForm()">help me!</button>
+
                         
                         
                         
@@ -78,10 +180,13 @@
                     <div id='imageEditor'>
                         
                         <label for="file" id="toolbutton2">add image
-                            <input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: none; margin-top: 0px;">
+                            <input type="file"  accept="image/*" name="image" id="file"  style=" margin-top: 0px;  display:none;">
                         </label>
 
+                        <button id='deleteImgButton' style="font-family: inherit;"> erase image
                         
+                        </button>
+
                     </div>                 
                     
 
@@ -117,37 +222,48 @@
 
         </div>
         <div id='paintbox'>
-            <img id="output" width="200" style="cursor: pointer; position: absolute;"/> 
+            <img id="output" alt="userImg" width="200" height="200" style="cursor: pointer; position: absolute; display: none;"/> 
+            <svg id="imagesvg" width="769" height="513" style="position: absolute;"></svg>
             <svg id="shapesvg" width="769" height="513" style="position: absolute;"></svg>
             <canvas id="paintdest">
                 
             </canvas>
             
+        
+            
         </div>    
          
-         
+        
     </div>  
     
 
     <h1 style="margin: 0 auto; text-align: center; margin: 5px; padding-bottom: 5px; font-family: cursive;">
+        
         <a style="margin: 0 auto; text-align: center; margin: 5px; padding-bottom: 5px; font-family: cursive; color: aquamarine;" href="https://github.com/mpb9/playground">my code</a>
         <a style="margin: 0 auto; text-align: center; margin: 5px; padding-bottom: 5px; font-family: cursive; color: aquamarine;" href="http://mikeandconnor.herokuapp.com/">another site</a>
 
     </h1>
- 
+
     <div style="margin: 0 auto;">
-        <h1 style="margin: 0 auto; text-align: center; margin: 5px; padding-bottom: 5px; font-family: cursive;"> HAVE FUN (:</h1>
+        <h1 style="margin: 0 auto; text-align: center; margin: 5px;  font-family: cursive;"> HAVE FUN (:</h1>
         
     </div>   
+
+    <h3 style="margin: 0 auto; text-align: right; margin: 5px; padding-bottom: 25px; padding-right: 50px; font-family: cursive;">contact me: michaelbeebe1031@gmail.com</h3>
+
     
 
 </body>
 <script>
-    var loadFile = function(event) {
-        var image = document.getElementById('output');
-        image.src = URL.createObjectURL(event.target.files[0]);
-    };
+    function openForm() {
+      document.getElementById("myForm").style.display = "block";
+    }
+    
+    function closeForm() {
+      document.getElementById("myForm").style.display = "none";
+    }
 </script>
 <script type ="text/javascript" src="bouncingballs.js"></script>
 <script type="text/javascript" src="draw.js"></script>
+<script type="text/javascript" src="shader.js"></script>
 </html>

@@ -21,3 +21,6 @@ const GPinToUnit = (x) => {
 const clamp = (x, max) => {
     return Math.max(1.0, Math.min(x, max));
 }
+const clampMinZero = (x, max) => {
+    return Math.max(0.0, Math.min(x, max));
+}
