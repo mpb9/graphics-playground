@@ -8,7 +8,13 @@
 window.addEventListener('load', () => {
     const container = document.querySelector('#bounceContainer')
     
-   
+    let stopPlz = false;
+    let noMoreCalls = false;
+
+    let imaging = document.querySelector('#file');
+    imaging.addEventListener("change", function(){
+      stopPlz = true;
+    });
     
     class Ball {
       constructor(x, y, dx, dy, diameter, color) {
@@ -27,7 +33,11 @@ window.addEventListener('load', () => {
           position: 'absolute',
         })
         container.appendChild(this.div)
+
+        
         requestAnimationFrame(advance)
+
+        
       }
       
       move() {
@@ -47,18 +57,25 @@ window.addEventListener('load', () => {
         
         
       }
+
+      remove() {
+        [this.div.style.width, this.div.style.height] = [`0px`, `0px`]
+      }
+
     }
   
     const advance = () => {
       
-      balls.forEach(ball => ball.move())
+      if(!stopPlz){
+        balls.forEach(ball => ball.move())
 
-      //commented out for now just to reduce the drain on the server
-      
-      //requestAnimationFrame(advance)
-      
-      
-      
+        //commented out for now just to reduce the drain on the server
+        
+        requestAnimationFrame(advance)
+      } else if(!noMoreCalls){
+        balls.forEach(ball => ball.remove())
+        noMoreCalls = true;
+      } 
     }
   
     const balls = [

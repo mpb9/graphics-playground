@@ -15,7 +15,7 @@
 <body id='pageBody'>
     <div class="form-popup" id="myForm">
         <form action="/action_page.php" class="form-container">
-            <h1 style="margin-top: 0px;">About:</h1>
+            <h2 style="margin-top: 0px; margin-left: 5px;">About:</h2>
             <table style="width: 100%;">
                 <tr>
                     <th>Drawing Paths:
@@ -26,7 +26,7 @@
                     
                     <td>New Path: 
                         <p>
-                            lines will continue to connect as you click until you click this
+                            new lines will continue to connect to previous until you click this
                         </p>
                     </td>
                     <td>Width: 
@@ -34,7 +34,7 @@
                             set width of lines (1-99)
                         </p>
                     </td>
-                    <td>Cap: 
+                    <td>Line Cap: 
                         <p>
                             choose whether lines in your path will stop immediately, be rounded, or be squared
                         </p>
@@ -81,7 +81,7 @@
                     </td>
                     <td>Clear: 
                         <p>
-                            removes everything you've created from the canvas (except for an image just in case you want to keep the background)
+                            removes everything you've created from the canvas (except for an image just in case you want to keep it)
                         </p>
                     </td>
                     <td></td>
@@ -95,11 +95,13 @@
                     </td>
                     <td>Erase Image: 
                         <p>
-                            just in case you do not want to keep the background after all
+                            just in case you do not want to keep the image after all
                         </p>
                     </td>
-                    <td>
-                        
+                    <td>Tint Image: 
+                        <p>
+                            add color to your background image (based on color and opacity selections)
+                        </p>
                     </td>
                   </tr>
             </table>
@@ -183,6 +185,19 @@
                             <input type="file"  accept="image/*" name="image" id="file"  style=" margin-top: 0px;  display:none;">
                         </label>
 
+                        <button id='fitImgButton' style="font-family: inherit;"> fit image 
+                        
+                        </button>
+
+                        <button id='tintButton' style="font-family: inherit;"> tint image 
+                        
+                        </button>
+
+
+                        <button id='noTintButton' style="font-family: inherit;"> remove tint 
+                        
+                        </button>
+
                         <button id='deleteImgButton' style="font-family: inherit;"> erase image
                         
                         </button>
@@ -191,6 +206,8 @@
                     
 
                 </div>
+
+
                 <div style="float: left; margin:0; width: 9%; text-align: right;">
                     <button id='toolboxButton2'> 
                         <p style="writing-mode: vertical-rl;
