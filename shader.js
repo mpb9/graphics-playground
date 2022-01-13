@@ -10,8 +10,6 @@ let context = can.getContext('2d');
 context.beginPath();
 
 // image vars
-var imgHeight = 0;
-var imgWidth = 0;
 var image;
 var imgAdded = false;
 var rgba;
@@ -59,25 +57,39 @@ userImage.addEventListener("change", function(e){
 
         
         //context.drawImage(image, 0, 0, image.width, image.height);
-        imgHeight = image.height;
-        imgWidth = image.width; 
+        
 
         rgba = tempCtx.getImageData( //was originally context.__
             0, 0, image.width, image.height 
         ).data;
 
         for(var i = 0; i < rgba.length; i += 4){
-            pixels[numPixels] = packRGBA(
-                rgba[i], rgba[i+1], rgba[i+2], rgba[i+3]
+            pixels[numPixels] = packRGB(
+                rgba[i], rgba[i+1], rgba[i+2]
             );
+
             numPixels++;
         }
 
-        imageBitmap = makeImageBitmap(imgWidth, imgHeight, pixels);
+        imageBitmap = makeImageBitmap(image.width, image.height, pixels);
 
-        createFullSizeImage(imageBitmap, imgsvg);
+        //createFullSizeImage(imageBitmap, imgsvg);
+
+        //new
+
+        
+
+        bitWidthRatio = imageBitmap.w / can.width;
+        bitHeightRatio = imageBitmap.h / can.height;
+
+        
+
+        createFittedImage(bitWidthRatio, bitHeightRatio);
+
+        //end new
 
         context.clearRect(0,0,can.width, can.height);
+
         
     };
 
@@ -87,37 +99,6 @@ userImage.addEventListener("change", function(e){
 
 });
 
-// fit image to canvas if there is one
-let fitImage = document.querySelector('#fitImgButton');
-fitImage.addEventListener("mousedown",function(){
-
-    if(imgAdded){
-        if(hasTint){
-            oldTintColor = imgsvg.childNodes[imgsvg.childNodes.length - 1].attributes[4].value;
-            oldTintOpacity = imgsvg.childNodes[imgsvg.childNodes.length - 1].attributes[5].value;
-
-        } else {
-            oldTintColor = "";
-            oldTintOpacity = "";
-        }
-
-        for(var i = imgsvg.childNodes.length -1; i>=0; i--){
-            imgsvg.removeChild(imgsvg.childNodes[i]);
-        }
-        
-
-
-        bitWidthRatio = imageBitmap.w / can.width;
-        bitHeightRatio = imageBitmap.h / can.height;
-
-        
-
-        createFittedImage(imageBitmap, imgsvg, 
-                            bitWidthRatio, bitHeightRatio,
-                            oldTintColor, oldTintOpacity);
-    }
-
-});
 
 // adds tint to the image (only if img is there)... currently tints whole canvas
 let imgTint = document.querySelector('#tintButton');
@@ -127,7 +108,7 @@ imgTint.addEventListener("mousedown", function(){
         let tintOpacity = document.querySelector('#opacity');
 
         if(tintOpacity.value == ""){
-            tintOpacity = 1.0;
+            tintOpacity = 0.2;
         } else {
             tintOpacity = opacity.valueAsNumber / 100;
         }
@@ -160,8 +141,6 @@ function eraseImg(){
         }
     
         imgAdded = false;
-        imgHeight = 0;
-        imgWidth = 0;
         image = new Image();
         rgba = null;
         pixels = new Array();
@@ -185,6 +164,7 @@ function eraseTint(){
 
 
 //creates full size img that is clipped by canvas
+/*
 function createFullSizeImage(imageBitmap, imgsvg){
 
     // i should definitely be making this with matrix/final exam
@@ -252,25 +232,16 @@ function createFullSizeImage(imageBitmap, imgsvg){
         } 
     }
 }
+*/
 
-function createFittedImage(imageBitmap, imgsvg, wRatio, hRatio, oldTintColor, oldTintOpacity){
-    var pixID = 0;
+function createFittedImage(wRatio, hRatio){
     
-    for(var y = 0; y< can.height; y++){
+    for(var y = 0; y< can.height; y+=1.5){
 
-
-        for(var x = 0; x<  can.width; x++){
+        for(var x = 0; x<  can.width; x+=1.5){
+                        
             
-            var pix;
-
-            var pixSize = 1.1;
-            
-            var bitX = GFloorToInt(wRatio * x);
-            var bitY = GFloorToInt(hRatio * y);
-            
-            pix = imageBitmap.getAddress(bitX, bitY);
-            
-            
+            var pix = imageBitmap.getAddress(GFloorToInt(wRatio * x), GFloorToInt(hRatio * y));
 
             
             //this doing a row shade is probably quicker
@@ -284,38 +255,17 @@ function createFittedImage(imageBitmap, imgsvg, wRatio, hRatio, oldTintColor, ol
             );
             imgShade.setAttribute("x", (x+1).toString());
             imgShade.setAttribute("y", (y+1).toString());
-            imgShade.setAttribute("height", pixSize.toString());
-            imgShade.setAttribute("width", pixSize.toString());
+            imgShade.setAttribute("height", "1.6");
+            imgShade.setAttribute("width", "1.6");
             imgShade.setAttribute("fill", pixColor);
-            imgShade.setAttribute("fill-opacity", (pix.a / 383).toString());
-            imgShade.setAttribute("id", pixID.toString());
+            imgShade.setAttribute("fill-opacity", "0.8");
+            //imgShade.setAttribute("id", pixID.toString());
 
             imgsvg.appendChild(imgShade);
 
-            pixID++;
             
         }
         
-    }
-
-    if(oldTintColor != ""){
-
-        const tint = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "rect",
-        );
-        tint.setAttribute("x", "1");
-        tint.setAttribute("y", "1");
-        tint.setAttribute("height", can.height.toString());
-        tint.setAttribute("width", can.width.toString());
-        tint.setAttribute("fill", oldTintColor.toString());
-        tint.setAttribute("fill-opacity", oldTintOpacity.toString());
-        tint.setAttribute("id", "tint");
-            
-        imgsvg.appendChild(tint);
-    
-        hasTint = true;
-
     }
     
 
