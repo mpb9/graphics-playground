@@ -37,15 +37,26 @@ userImage.addEventListener("change", function(e){
     //image = document.getElementById('output');
 
     if(imgAdded){
-        return;
+        for(var i = imgsvg.childNodes.length -1; i>=0; i--){
+            imgsvg.removeChild(imgsvg.childNodes[i]);
+        }
+    
+        imgAdded = false;
+        image = new Image();
+        rgba = null;
+        pixels = new Array();
+        numPixels = 0;
+        imageBitmap = null;
+        hasTint = false;
+
     }
     var image = new Image();
-    if(!imgAdded){
+    
         context.font = "40px Comic Sans MS";
         context.fillStyle = "mediumpurple";
         context.textAlign = "center";
         context.fillText("loading...", can.width/2, can.height/2);
-    }
+    
     image.onload = function(){
 
         var tempCan = document.createElement("canvas");
@@ -154,6 +165,7 @@ function eraseImg(){
 let invertImg = document.querySelector('#invertButton');
 invertImg.addEventListener("mousedown", function(){
     if(imgAdded){
+
         for(var i = 0; i < imgsvg.childNodes.length; i++){
             var oldColor = imgsvg.childNodes[i].getAttribute("fill");
             
@@ -170,6 +182,7 @@ invertImg.addEventListener("mousedown", function(){
 
             
         }
+
     }
 });
 
@@ -278,10 +291,10 @@ function createFittedImage(wRatio, hRatio){
             );
             imgShade.setAttribute("x", (x+1).toString());
             imgShade.setAttribute("y", (y+1).toString());
-            imgShade.setAttribute("height", "1.27");
-            imgShade.setAttribute("width", "1.27");
+            imgShade.setAttribute("height", "1.3");
+            imgShade.setAttribute("width", "1.3");
             imgShade.setAttribute("fill", pixColor);
-            imgShade.setAttribute("fill-opacity", "0.95");
+            imgShade.setAttribute("fill-opacity", "0.9");
             //imgShade.setAttribute("id", pixID.toString());
 
             imgsvg.appendChild(imgShade);

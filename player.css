@@ -21,10 +21,10 @@
 }
 h4{
     padding-top: 25px;
-    font-family: cursive;
+    font-family: "Comic Sans MS", cursive;
 }
 h5{
-    font-family: cursive;
+    font-family: "Comic Sans MS", cursive;
     margin-top: 10px;
     display: inline-block;
 }
@@ -133,7 +133,7 @@ h5{
     margin:0 auto; 
     width: 82%; 
     height: fit-content;
-    font-family: cursive; 
+    font-family: "Comic Sans MS", cursive; 
 }
 #sSize{
     font-family: inherit; 
@@ -370,7 +370,7 @@ h5{
     margin:0; 
     width: 35%; 
     height: fit-content;
-    font-family: cursive; 
+    font-family: "Comic Sans MS", cursive; 
     margin-top: 10px; 
     margin-bottom: 0px;
 }
@@ -380,7 +380,7 @@ h5{
     margin:0; 
     width:65%; 
     height: fit-content;
-    font-family: cursive; 
+    font-family: "Comic Sans MS", cursive; 
     margin-top: 10px; 
     margin-bottom: 0px;
     
@@ -411,7 +411,7 @@ h5{
     margin-top: 5px;
     margin-right: 15px;
     height: 40px;
-    font-family: cursive;
+    font-family: "Comic Sans MS", cursive;
     background-color: red;
     color: black;
     padding: 3px;
@@ -452,7 +452,7 @@ h5{
     left: 80%;
     font-size: 18px;   
     opacity: 0.8;
-    font-family: cursive;
+    font-family: "Comic Sans MS", cursive;
   }
 
   
@@ -474,4 +474,12 @@ th {
     font-size: large;
     padding-bottom: 10px;
     padding-right: 10px;
+}
+
+#myLinks {
+    margin: 0 auto; 
+    text-align: center; 
+    margin: 5px; 
+    padding-bottom: 5px; 
+    font-family: "Comic Sans MS", cursive;
 }
