@@ -150,6 +150,29 @@ function eraseImg(){
     }
 }
 
+//invert img
+let invertImg = document.querySelector('#invertButton');
+invertImg.addEventListener("mousedown", function(){
+    if(imgAdded){
+        for(var i = 0; i < imgsvg.childNodes.length; i++){
+            var oldColor = imgsvg.childNodes[i].getAttribute("fill");
+            
+            var red = oldColor.substring(4, oldColor.indexOf(" ,"));
+            var greenblue = oldColor.substring(red.length + 6, oldColor.indexOf(")"));
+
+            var invR = 255 - parseFloat(red);
+            var invG = 255 - parseFloat(greenblue);
+            var invB = 255 - parseFloat(greenblue.substring(greenblue.indexOf(" ,") + 2, greenblue.length));
+
+            var invColor = "rgb(" + invR.toString() + " ," + invG.toString() + " ," + invB.toString() + ")";
+
+            imgsvg.childNodes[i].setAttribute("fill", invColor);
+
+            
+        }
+    }
+});
+
 // erase tint (only if added after img)
 let noTint = document.querySelector('#noTintButton');
 noTint.addEventListener("mousedown", eraseTint);
@@ -236,9 +259,9 @@ function createFullSizeImage(imageBitmap, imgsvg){
 
 function createFittedImage(wRatio, hRatio){
     
-    for(var y = 0; y< can.height; y+=1.5){
+    for(var y = 0; y< 512; y+=1.2){
 
-        for(var x = 0; x<  can.width; x+=1.5){
+        for(var x = 0; x< 770; x+=1.2){
                         
             
             var pix = imageBitmap.getAddress(GFloorToInt(wRatio * x), GFloorToInt(hRatio * y));
@@ -255,10 +278,10 @@ function createFittedImage(wRatio, hRatio){
             );
             imgShade.setAttribute("x", (x+1).toString());
             imgShade.setAttribute("y", (y+1).toString());
-            imgShade.setAttribute("height", "1.6");
-            imgShade.setAttribute("width", "1.6");
+            imgShade.setAttribute("height", "1.27");
+            imgShade.setAttribute("width", "1.27");
             imgShade.setAttribute("fill", pixColor);
-            imgShade.setAttribute("fill-opacity", "0.8");
+            imgShade.setAttribute("fill-opacity", "0.95");
             //imgShade.setAttribute("id", pixID.toString());
 
             imgsvg.appendChild(imgShade);
