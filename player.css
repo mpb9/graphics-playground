@@ -1,3 +1,6 @@
+body{
+    zoom: 110%;
+}
 #pageBody {
     background-color: cornflowerblue; 
     position: absolute; 
