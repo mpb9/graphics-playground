@@ -24,3 +24,23 @@ const clamp = (x, max) => {
 const clampMinZero = (x, max) => {
     return Math.max(0.0, Math.min(x, max));
 }
+
+const toDeci = (h) => {
+    var d = 0;
+    if(h == "a"){
+        d = 10;
+    } else if(h == "b"){
+        d = 11;
+    }else if(h == "c"){
+        d = 12;
+    }else if(h == "d"){
+        d = 13;
+    }else if(h == "e"){
+        d = 14;
+    }else if(h == "f"){
+        d = 15;
+    }else{
+        d = parseFloat(h);
+    }
+    return d;
+}

@@ -6,9 +6,13 @@
     <link rel="stylesheet" href="css/paintTools.css">
     <link rel="stylesheet" href="css/imageTools.css">
     <link rel="stylesheet" href="css/help.css">
+    <link rel="stylesheet" href="css/fill.css">
+
 
 
     <script type="text/javascript" src="MyUtility.js"></script>
+
+
     <script type="text/javascript" src="models/matrix.js"></script>
     <script type="text/javascript" src="models/point.js"></script>
     <script type="text/javascript" src="models/pixel.js"></script>
@@ -46,10 +50,15 @@
                     </td>
                   </tr>
                   <tr>
-                    <th>Shading:</th>
-                    <td>Colors: 
+                    <th>Fills:</th>
+                    <td>Solid Color: 
                         <p>
                             set color of shapes and lines
+                        </p>
+                    </td>
+                    <td>Vertical Gradient:
+                        <p>
+                            choose two colors for a vertical linear gradient of shapes and lines
                         </p>
                     </td>
                     <td>Opacity: 
@@ -57,7 +66,6 @@
                             set opacity of shapes and lines (0-99)
                         </p>
                     </td>
-                    <td></td>
                   </tr>
                   <tr>
                     <th>Shapes:
@@ -131,9 +139,36 @@
                 <div id='painttools'>
                     <div id='paintEditor'>
 
-                        <button id='toolbutton' style="font-family: inherit;"> color 
+
+                        <div id="lightbox">Choose Shape/Stroke Fill
+                            <div id="fillOption" class="fillOption"> 
+                                <button id="solidChosen" class="chooseFill">select</button>
+                                solid color: 
+                                <input type="color" id="fullColor" name="fullColor" title="select" placeholder="" value="#ff0000"/>
+                            </div>
+
+                            <div id="fillOption" class="fillOption"> 
+                                <button id="vertChosen" class="chooseFill">select</button>
+                                <button id="horiChosen" class="chooseFill">horizontal</button>
+
+                                linear gradient: 
+                                <input type="color" id="gradColor1" name="gradColor1" title="select" placeholder="" value="#ff0000"/>
+                                <input type="color" id="gradColor2" name="gradColor2" title="select" placeholder="" value="#00ff00"/>
+                            </div>
+
+                        </div>
+                        <button id='fillButton' href="#" style="font-family: inherit;" value="solid"> choose fill </button>
+
+
+
+
+                        
+                        <button id='toolbutton' style="font-family: inherit;"> fill 
                             <input type="color" id="colorPicker" name="colorPicker" title="select" placeholder="" value="#ff0000"/>
+                            <input type="color" id="colorPicker2" name="colorPicker2" title="select" placeholder="" value="#ff0000"/>
+
                         </button>
+                        
 
                         <input type="number" id="sSize" name="sSize" step="1" placeholder="width" min="1" max="99" >
                         
@@ -308,6 +343,8 @@
     }
 </script>
 <script type ="text/javascript" src="bouncingballs.js"></script>
+<script type="text/javascript" src="fill.js"></script>
+
 <script type="text/javascript" src="draw.js"></script>
 <script type="text/javascript" src="shader.js"></script>
 </html>

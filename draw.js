@@ -32,6 +32,12 @@ canvas.width= 770;
 let ctx = canvas.getContext('2d');
 ctx.beginPath();
 
+// fill type 
+let fillType = document.querySelector('#fillButton');
+
+//second color if gradient
+
+
 // svg drawer and points in svg circle or polygon
 let svg = document.querySelector("#shapesvg");
 var svgPoints = new Array();
@@ -54,19 +60,6 @@ function getSelectedOption(someChange) {
     }
     return pathGeo.value;
 }
-
-//these appear unneeded rn
-/*
-var svgShapeCount = 0; 
-
-const svgShapes = new Array();
-
-var svgElement = document.createElementNS("http://www.w3.org/1999/xhtml", "pathShape");
-
-var canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-*/
-
-
 
 //end lines button has been pressed
 let linesDone = document.querySelector('#endLinesButton');
@@ -110,8 +103,14 @@ shapeDone.addEventListener("mousedown", function(){
 
         let strokeColor = document.querySelector('#colorPicker');
         ctx.strokeStyle = strokeColor.value;
+        let strokeColor2 = document.querySelector('#colorPicker2');
+        let color2 = strokeColor2.value;
 
-        fillShape(svgPoints, svgPoints.length, canvas.height, canvas.width, ctx.strokeStyle, path);
+        if(fillType.value == "solid"){
+            color2 = ctx.strokeStyle;
+        }
+
+        fillShape(svgPoints, svgPoints.length, canvas.height, canvas.width, ctx.strokeStyle, color2, path);
 
         if(svgChildID > svgIndices[svgIndices.length - 1]){
             svgIndices[svgIndices.length] = svgChildID;
@@ -178,6 +177,13 @@ svg.addEventListener("mousedown", function(e)
     let strokeColor = document.querySelector('#colorPicker');
     ctx.strokeStyle = strokeColor.value;
 
+    let strokeColor2 = document.querySelector('#colorPicker2');
+    let color2 = strokeColor2.value;
+
+    if(fillType.value == "solid"){
+        color2 = ctx.strokeStyle;
+    }
+
     if(shapeTime || circleTime){
 
         ctx.lineWidth = 2;
@@ -206,8 +212,11 @@ svg.addEventListener("mousedown", function(e)
                 circlePoints = addCircle(p0, Math.sqrt((p.x - p0.x)**2 + (p.y - p0.y)**2));
 
                 ctx.strokeStyle = strokeColor.value;
+                if(fillType.value == "solid"){
+                    color2 = ctx.strokeStyle;
+                } 
 
-                fillShape(circlePoints, circlePoints.length, canvas.height, canvas.width, ctx.strokeStyle, "quadratic");
+                fillShape(circlePoints, circlePoints.length, canvas.height, canvas.width, ctx.strokeStyle, color2, "quadratic");
                 circleTime = false;
 
                 if(svgChildID > svgIndices[svgIndices.length - 1]){
@@ -215,28 +224,7 @@ svg.addEventListener("mousedown", function(e)
                 }
             }
         }
-        
-
-    // have circleTime set up like shapeTime... need to make it 
-    // with mpb9_path stuff... yay
-    /*
-    } else if (circleTime){
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = 'rgba(0, 0, 0, 0.4)';
-        if(cleared == 0){
-            p0 = makePoint(e.layerX,e.layerY);
-            ctx.moveTo(p0.x, p0.y)
-            cleared = 1;
-        } else if (cleared == 1){
-            let p = makePoint(e.layerX, e.layerY);
-            ctx.lineTo(p.x,p.y);
-            ctx.stroke();
-
-            drawCircle(p0, p);
-
-            cleared = 0;
-        }
-    */
+    
     } else {
         let strokeSize = document.querySelector('#sSize');
         
@@ -250,13 +238,13 @@ svg.addEventListener("mousedown", function(e)
 
         //add a "done" button to and a line stroke or just change end shape to include lines?
         
-        addPathClick(canvas, e, ctx, svgLineWidth);
+        addPathClick(canvas, e, ctx, color2, svgLineWidth);
     }
     
 });
 
 //used only for drawing path
-function addPathClick(canvas, event, ctx, svgLineWidth){
+function addPathClick(canvas, event, ctx, color2, svgLineWidth){
 
     var x = event.layerX;
     var y = event.layerY;
@@ -272,21 +260,24 @@ function addPathClick(canvas, event, ctx, svgLineWidth){
         var capy = getSelectedOption(capChange);
 
         linePoints = addLine(lineP0, makePoint(x,y), svgLineWidth, capy);
+        if(fillType.value == "solid"){
+            color2 = ctx.strokeStyle;
+        }
 
-        fillShape(linePoints[0], linePoints[0].length, canvas.height, canvas.width, ctx.strokeStyle, "linear");
+        fillShape(linePoints[0], linePoints[0].length, canvas.height, canvas.width, ctx.strokeStyle, color2, "linear");
 
         if(svgChildID > svgIndices[svgIndices.length - 1]){
             svgIndices[svgIndices.length] = svgChildID;
         }
 
         if(capy == "round"){
-            fillShape(linePoints[1], linePoints[1].length, canvas.height, canvas.width, ctx.strokeStyle, "quadratic");
+            fillShape(linePoints[1], linePoints[1].length, canvas.height, canvas.width, ctx.strokeStyle, color2, "quadratic");
 
             if(svgChildID > svgIndices[svgIndices.length - 1]){
                 svgIndices[svgIndices.length] = svgChildID;
             }
 
-            fillShape(linePoints[2], linePoints[2].length, canvas.height, canvas.width, ctx.strokeStyle, "quadratic");
+            fillShape(linePoints[2], linePoints[2].length, canvas.height, canvas.width, ctx.strokeStyle, color2, "quadratic");
 
             if(svgChildID > svgIndices[svgIndices.length - 1]){
                 svgIndices[svgIndices.length] = svgChildID;
@@ -311,7 +302,6 @@ function createNewShape(height, width, p0, ctx){
     svgPoints[svgPoints.length] = p0;
 
 
-    //var svgElement = document.createElementNS("http://www.w3.org/1999/xhtml", "pathShape");
     
 }
 
@@ -322,7 +312,7 @@ function drawShape(canvas, height, width, p, ctx, cleared){
     svgPoints[svgPoints.length] = p;
 }
 
-function fillShape(pts, count, height, width, color, path){
+function fillShape(pts, count, height, width, color, color2, path){
     //NOT CLIPPING EDGES, NO SHADERS, NO CUBID OR QUAD
     const ptsSize = count+1;
     pts[pts.length] = pts[0];
@@ -367,7 +357,10 @@ function fillShape(pts, count, height, width, color, path){
     var x0; 
     var x1;
 
-    for(var y = GRoundToInt(edges[0].top.fY); y <= height; y++){
+    var minY = GRoundToInt(edges[0].top.fY);
+    var maxY = GRoundToInt(edges[size-1].bottom.fY);
+
+    for(var y = minY; y <= height; y++){
 
         for(var i = 0; i < size; i++){
             if(GRoundToInt(edges[i].top.fY) <= y && GRoundToInt(edges[i].bottom.fY) > y){
@@ -388,13 +381,10 @@ function fillShape(pts, count, height, width, color, path){
                 x1 = tempEs[i].currX;
 
                 var shapeColor = color;
-                //testing
-                //if(path != "quadratic"){
+                
 
-                //slowFill;
-
-                fillIt(x0, x1, y, shapeColor);
-                //}
+                fillIt(x0, x1, y, shapeColor, color2, minY, maxY);
+                
             }
         }
         tempEs= [];
@@ -406,13 +396,12 @@ function fillShape(pts, count, height, width, color, path){
     cleared = 0;
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    //svg.removeChild(svgElement);
 
     ctx.beginPath();
     
 }
 
-function fillIt(x0, x1, y, shapeColor){
+function fillIt(x0, x1, y, shapeColor, color2, minY, maxY){
 
     x0 = clamp(x0, canvas.width);
     x1 = clamp(x1, canvas.width);
@@ -430,6 +419,17 @@ function fillIt(x0, x1, y, shapeColor){
             svgIndices[svgIndices.length] = 0;
         }
 
+        //should add a variable to fillIt() so i dont have to blend the colors if only 1 color
+        var r = GFloorToInt( (1- (y-minY)/(maxY-minY)) * getDec(shapeColor.substring(1,2), shapeColor.substring(2,3)) ) + 
+                    GFloorToInt( (y-minY)/(maxY-minY) * getDec(color2.substring(1,2), color2.substring(2,3)) );
+
+        var g = GFloorToInt( (1- (y-minY)/(maxY-minY)) * getDec(shapeColor.substring(3,4), shapeColor.substring(4,5)) ) + 
+                    GFloorToInt( (y-minY)/(maxY-minY) * getDec(color2.substring(3,4), color2.substring(4,5)) );
+
+        var b = GFloorToInt( (1- (y-minY)/(maxY-minY)) * getDec(shapeColor.substring(5,6), shapeColor.substring(6,7)) ) + 
+                    GFloorToInt( (y-minY)/(maxY-minY) * getDec(color2.substring(5,6), color2.substring(6,7)) );
+
+       
         const shade = document.createElementNS(
             "http://www.w3.org/2000/svg",
             "rect",
@@ -438,7 +438,7 @@ function fillIt(x0, x1, y, shapeColor){
         shade.setAttribute("y", y.toString());
         shade.setAttribute("height", "1");
         shade.setAttribute("width", (x1-x0).toString());
-        shade.setAttribute("fill", shapeColor.toString());
+        shade.setAttribute("fill", "rgb(" + r.toString() + " ," + g.toString() + " ," + b.toString() + ")");
         shade.setAttribute("fill-opacity", opacity.toString());
         shade.setAttribute("id", svgChildID.toString());
             
@@ -449,7 +449,9 @@ function fillIt(x0, x1, y, shapeColor){
     
 }
 
-
-function slowFill(){
-    ms++;
+function getDec(v1,v2){
+    var big = toDeci(v1)*16;
+    var small = toDeci(v2);
+        
+    return big+small;
 }

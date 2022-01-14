@@ -1,0 +1,104 @@
+#fillButton {
+    cursor: pointer;
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow:none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+}
+
+#lightbox{
+    visibility:hidden;
+    position:absolute;
+    background:white;
+    border: 5px solid aquamarine;    
+    z-index:100;
+    width: max-content;
+    height: max-content;
+    padding:20px;
+    font-size: 18px;
+
+    left: 13%;
+    right: 30%;
+    top: 40%;
+}
+
+.dimmer{
+    background: #000;
+    position: absolute;
+    opacity: .5;
+    top: 0;
+    z-index:99;
+}
+
+#fillOption{
+    
+    margin-top: 10px;
+    padding-top: 4px;
+    padding-bottom: 6px;
+    padding-left: 10px;
+
+}
+
+.fillOption:hover{
+    border-left: 2px solid cornflowerblue;
+
+}
+
+.chooseFill {
+    cursor: pointer; 
+    background-color: white; 
+    border: outset 2px black; 
+    text-shadow:none; 
+    padding: 5px; 
+    font-size: 14px;
+    font-family: 'Comic Sans MS', normal;
+    
+    display: inline-block;
+    margin-right: 10px;
+    text-align: right;
+}
+.chooseFill:hover{
+    background-color: aquamarine;
+}
+
+#fullColor{
+    cursor: pointer; 
+    margin: 0 auto;
+    margin-top: 0px;
+    margin-left: 10px;
+    padding: 3px;
+    display: inline-block;
+    border: none;
+    z-index: -5;
+}
+
+#gradColor1{
+    cursor: pointer; 
+    margin: 0 auto;
+    margin-top: 0px;
+    margin-left: 10px;
+    padding: 3px;
+    display: inline-block;
+    border: none;
+    z-index: -5;
+}
+
+#gradColor2{
+    cursor: pointer; 
+    margin: 0 auto;
+    margin-top: 0px;
+    margin-left: 10px;
+    padding: 3px;
+    display: inline-block;
+    border: none;
+    z-index: -5;
+}
+
+#horiChosen{
+    visibility: hidden;
+    display: none;
+}
