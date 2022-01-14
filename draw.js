@@ -180,7 +180,7 @@ svg.addEventListener("mousedown", function(e)
 
     if(shapeTime || circleTime){
 
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 2;
         ctx.strokeStyle = 'rgba(0, 0, 0, 1.0)';
 
         if(cleared == 0){
@@ -367,7 +367,7 @@ function fillShape(pts, count, height, width, color, path){
     var x0; 
     var x1;
 
-    for(var y = GRoundToInt(edges[0].top.fY); y <= height; y+= 0.5){
+    for(var y = GRoundToInt(edges[0].top.fY); y <= height; y++){
 
         for(var i = 0; i < size; i++){
             if(GRoundToInt(edges[i].top.fY) <= y && GRoundToInt(edges[i].bottom.fY) > y){

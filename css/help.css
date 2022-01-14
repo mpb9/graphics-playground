@@ -1,0 +1,55 @@
+.open-button {
+    font-size: 14px;
+    display: inline-block;
+    margin-top: 5px;
+    margin-right: 15px;
+    height: 40px;
+    font-family: "Comic Sans MS", cursive;
+    background-color: red;
+    color: black;
+    padding: 3px;
+    border: outset 3px red;
+    cursor: pointer;
+    opacity: 0.8;
+    
+  }
+  
+  /* The popup form - hidden by default */
+  .form-popup {
+    display: none;
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 10%;
+    border: 10px solid aquamarine;
+    z-index: 9;
+  }
+  
+  /* Add styles to the form container */
+  .form-container {
+    padding: 10px;
+    background-color: white;
+    position: sticky;
+  }
+  
+  
+  /* Set a style for the submit/login button */
+  .form-container .cancel {
+    background-color: mediumpurple;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100px;
+    position: inherit;
+    left: 80%;
+    font-size: 18px;   
+    opacity: 0.8;
+    font-family: "Comic Sans MS", cursive;
+  }
+
+  
+  /* Add some hover effects to buttons */
+  .form-container .cancel:hover, .open-button:hover {
+    opacity: 1;
+  }

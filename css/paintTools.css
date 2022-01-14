@@ -1,0 +1,176 @@
+#painttools {
+    float:left; 
+    margin:0 auto; 
+    width: 82%; 
+    height: fit-content;
+    font-family: "Comic Sans MS", cursive; 
+}
+
+#paintEditor {
+    float:left; 
+    margin:0; 
+    width:65%; 
+    height: fit-content;
+    font-family: "Comic Sans MS", cursive; 
+    margin-top: 10px; 
+    margin-bottom: 0px;
+    
+    
+}
+
+#sSize{
+    font-family: inherit; 
+    width: 60px; 
+    background-color: beige;               
+    border: outset 3px aquamarine; 
+    text-shadow:none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 28px;
+}
+#opacity{
+    font-family: inherit; 
+    width: 70px; 
+    background-color: beige;               
+    border: outset 3px aquamarine; 
+    text-shadow:none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 28px;
+}
+#styleForm{
+    padding: 0px; 
+    display: inline-block;
+    margin-right: 0px;
+    height: 40px;
+}
+
+#strokeStyles{
+    cursor: pointer; 
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow:none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+    font-family: inherit;
+}
+.styleOption{
+    background-color: aquamarine;
+}
+
+#capStyles{
+    cursor: pointer; 
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow:none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+    font-family: inherit;
+}
+.capOption{
+    background-color: aquamarine;
+}
+
+#toolbutton {
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow:none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+}
+#colorPicker{
+    cursor: pointer; 
+    margin: 0 auto;
+    margin-top: 0px;
+    margin-left: 0px;
+    padding: 0px;
+    padding-bottom: 3px;
+    display: inline-block;
+    border: none;
+    z-index: -5;
+}
+
+#shapebutton {
+    cursor: pointer; 
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow:none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+}
+#endShapeButton{
+    cursor: pointer; 
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow: none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+}
+
+#endLinesButton{
+    cursor: pointer; 
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow: none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+}
+
+#circleButton{
+    cursor: pointer; 
+    background-color: beige; 
+    border: outset 3px aquamarine; 
+    text-shadow: none; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 15px;
+    height: 40px;
+}
+
+#clearbutton{
+    cursor: pointer; 
+    background-color: aquamarine; 
+    border: outset 3px aquamarine; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 15px;
+    height: 40px;
+}
+
+
+#eraseLast{
+    cursor: pointer; 
+    background-color: aquamarine; 
+    border: outset 3px aquamarine; 
+    padding: 3px; 
+    font-size: 14px;
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 15px;
+    height: 40px;
+}
