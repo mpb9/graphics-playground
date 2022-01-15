@@ -9,6 +9,9 @@ can.width= 770;
 let context = can.getContext('2d');
 context.beginPath();
 
+// fill type 
+let whichFill = document.querySelector('#fillButton');
+
 // image vars
 var image;
 var imgAdded = false;
@@ -116,6 +119,8 @@ let imgTint = document.querySelector('#tintButton');
 imgTint.addEventListener("mousedown", function(){
     if(imgAdded){
         let tintColor = document.querySelector('#colorPicker').value;
+        let tintColor2 = document.querySelector('#colorPicker2').value;
+
         let tintOpacity = document.querySelector('#opacity');
 
         if(tintOpacity.value == ""){
@@ -124,20 +129,50 @@ imgTint.addEventListener("mousedown", function(){
             tintOpacity = opacity.valueAsNumber / 100;
         }
 
+        if(whichFill.value == "solid"){
+            const tint = document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "rect",
+            );
+            tint.setAttribute("x", "1");
+            tint.setAttribute("y", "1");
+            tint.setAttribute("height", can.height.toString());
+            tint.setAttribute("width", can.width.toString());
+            tint.setAttribute("fill", tintColor.toString());
+            tint.setAttribute("fill-opacity", tintOpacity.toString());
+            tint.setAttribute("id", "tint");
+                
+            imgsvg.appendChild(tint);
+        } else {
+            for(var y = 1; y <= can.height; y++){
+
+                // should be subtracting 1 from y and can.height but that only messes it up a v small tad bit
+                var r = GFloorToInt( (1- (y)/(can.height)) * getDec(tintColor.substring(1,2), tintColor.substring(2,3)) ) + 
+                        GFloorToInt( (y)/(can.height) * getDec(tintColor2.substring(1,2), tintColor2.substring(2,3)) );
     
-        const tint = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "rect",
-        );
-        tint.setAttribute("x", "1");
-        tint.setAttribute("y", "1");
-        tint.setAttribute("height", can.height.toString());
-        tint.setAttribute("width", can.width.toString());
-        tint.setAttribute("fill", tintColor.toString());
-        tint.setAttribute("fill-opacity", tintOpacity.toString());
-        tint.setAttribute("id", "tint");
-            
-        imgsvg.appendChild(tint);
+                var g = GFloorToInt( (1- (y)/(can.height)) * getDec(tintColor.substring(3,4), tintColor.substring(4,5)) ) + 
+                GFloorToInt( (y)/(can.height) * getDec(tintColor2.substring(3,4), tintColor2.substring(4,5)) );
+    
+                var b = GFloorToInt( (1- (y)/(can.height)) * getDec(tintColor.substring(5,6), tintColor.substring(6,7)) ) + 
+                GFloorToInt( (y)/(can.height) * getDec(tintColor2.substring(5,6), tintColor2.substring(6,7)) );
+    
+                const tint = document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "rect",
+                );
+                tint.setAttribute("x", "1");
+                tint.setAttribute("y", y.toString());
+                tint.setAttribute("height", "1");
+                tint.setAttribute("width", can.width.toString());
+                tint.setAttribute("fill", "rgb(" + r.toString() + " ," + g.toString() + " ," + b.toString() + ")");
+                tint.setAttribute("fill-opacity", tintOpacity.toString());
+                tint.setAttribute("id", "tint");
+                    
+                imgsvg.appendChild(tint);
+    
+            }
+        }
+
 
         hasTint = true;
     }
@@ -193,7 +228,10 @@ noTint.addEventListener("mousedown", eraseTint);
 
 function eraseTint(){
     if(hasTint){
-        imgsvg.removeChild(imgsvg.childNodes[imgsvg.childNodes.length -1]);
+        while(imgsvg.childNodes[imgsvg.childNodes.length -1].id == "tint"){
+            imgsvg.removeChild(imgsvg.childNodes[imgsvg.childNodes.length -1]);
+
+        }
     }
     hasTint = false;
 }

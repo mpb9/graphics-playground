@@ -25,6 +25,14 @@ const clampMinZero = (x, max) => {
     return Math.max(0.0, Math.min(x, max));
 }
 
+
+function getDec(v1,v2){
+    var big = toDeci(v1)*16;
+    var small = toDeci(v2);
+        
+    return big+small;
+}
+
 const toDeci = (h) => {
     var d = 0;
     if(h == "a"){

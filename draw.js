@@ -259,16 +259,14 @@ function addPathClick(canvas, event, ctx, color2, svgLineWidth){
         
         var capy = getSelectedOption(capChange);
 
+        
+
         linePoints = addLine(lineP0, makePoint(x,y), svgLineWidth, capy);
         if(fillType.value == "solid"){
             color2 = ctx.strokeStyle;
         }
 
         fillShape(linePoints[0], linePoints[0].length, canvas.height, canvas.width, ctx.strokeStyle, color2, "linear");
-
-        if(svgChildID > svgIndices[svgIndices.length - 1]){
-            svgIndices[svgIndices.length] = svgChildID;
-        }
 
         if(capy == "round"){
             fillShape(linePoints[1], linePoints[1].length, canvas.height, canvas.width, ctx.strokeStyle, color2, "quadratic");
@@ -284,6 +282,12 @@ function addPathClick(canvas, event, ctx, color2, svgLineWidth){
             }
 
         }
+
+        if(svgChildID > svgIndices[svgIndices.length - 1]){
+            svgIndices[svgIndices.length] = svgChildID;
+        }
+
+        
 
         lineP0 = makePoint(x,y);
         cleared = 1;
@@ -449,9 +453,3 @@ function fillIt(x0, x1, y, shapeColor, color2, minY, maxY){
     
 }
 
-function getDec(v1,v2){
-    var big = toDeci(v1)*16;
-    var small = toDeci(v2);
-        
-    return big+small;
-}
