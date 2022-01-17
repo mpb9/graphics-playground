@@ -15,6 +15,7 @@ Paths, shapes, and circles are drawn on the top-most SVG image based on the user
   - More on edges: [edge.js](/models/edge.js) [point.js](/models/point.js)
 - "quadratic" and "cubic" shapes use three(quad) or four(cubic) points to calculate how a shape will fill. This means creating a certain number of edges that form a "curve" using the available points. Circles also use quadratic calculations.
   - Quadratic and Cubic calculations at bottom of: [edge.js](/models/edge.js)
+  - Create circle from two points: [path.js](/models/path.js)
 - The vertical gradient fill mode takes in two colors and calculates the weight of each from top to bottom of the shape.
 
 ##### Images:
