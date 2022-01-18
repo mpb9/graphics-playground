@@ -1,4 +1,3 @@
-
 let imgsvg = document.querySelector("#imagesvg");
 // general can info
 let can = document.querySelector("#paintdest");
@@ -32,7 +31,6 @@ var canvasOverBitHeight = 0;
 //erase image if there is one
 let removeImg = document.querySelector('#deleteImgButton');
 removeImg.addEventListener("mousedown", eraseImg);
-
 
 // image file inputed 
 let userImage = document.querySelector('#file');
@@ -104,7 +102,6 @@ userImage.addEventListener("change", function(e){
 
         context.clearRect(0,0,can.width, can.height);
 
-        
     };
 
     image.src = URL.createObjectURL(e.target.files[0]);
