@@ -1,5 +1,5 @@
 window.addEventListener('load', function(){
-    openForm();
+   // openForm();
 });
 // check if first point
 var cleared = 0; 

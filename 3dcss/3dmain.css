@@ -1,36 +1,55 @@
-body{
-    zoom: 100%;
-}
-#pageBody {
-    background-color: cornflowerblue; 
-    position: absolute; 
-    width: 100%; 
-    height:fit-content;
-    margin: 0 auto;
-    cursor:default;
+:root{
+    --main-green: #70c133;
+    --accent-green: #f7fcd4;
+
+    --main-grey: #6f7e7d;
+
+    --main-black: #1d1d1d;
+
+    --big-font: 30px monospace;
 }
 
-#bounceContainer {
-    margin: 0 auto; 
-    height: 120px;
-    background-color:mediumpurple;
-    text-align: center;
+body{
+    zoom: 100%;
+    background-color: var(--main-black);
+}
+
+#header{
+    margin: 0 auto;
+    margin-top: 15px;
+    margin-bottom: 20px;
+
+    width: 90%;
+    height: max-content;
+
+    z-index: 5;
+
+    background-color:var(--accent-green);
     border-style: solid;
-    border-color:aquamarine;
+    border-color:var(--main-green);
+    border-width: 3px;
+
+    padding: 0%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
+    text-align: center;
+    font: var(--big-font);
+}
+
+#gameDisplay {
+    margin: 0 auto; 
+    height: 600px;
+    width: 1000px;
+    background-color:var(--main-grey);
+    border-style: solid;
+    border-color:var(--main-green);
     border-width: 5px;
     padding: 0%;
-    margin-right: 200px;
-    margin-left: 200px;
+    
+    
 }
-h4{
-    padding-top: 25px;
-    font-family: "Comic Sans MS", cursive;
-}
-h5{
-    font-family: "Comic Sans MS", cursive;
-    margin-top: 10px;
-    display: inline-block;
-}
+
 #canvas-containter {
     margin: 0 auto; 
     height: fit-content;
@@ -146,23 +165,6 @@ h5{
     width: 768px;
     background-color: beige;
     border:1px solid #000000;
-}
-
-#goTo3D{
-    background-color: black;
-    font-weight: bold;
-    font-size: 18px;
-    color: #70c133;
-    padding: 4px;
-    border: 2px #71c133bd solid;
-    z-index: 8;
-    font-family: monospace;
-    position: sticky;
-    left: 100%;
-    bottom: 100%;
-    margin-right: 10px;
-    margin-top: 10px;    
-    width: fit-content;
 }
 
 td {

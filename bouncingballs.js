@@ -1,8 +1,3 @@
-/*
- * A script illustrating bouncing balls. The HTML should provide a container div
- * (id = 'bounceContainer') and a button (id = 'startOrStopBounce') that toggles
- * the animation.
- */
 
 
 window.addEventListener('load', () => {
