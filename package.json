@@ -1,0 +1,15 @@
+{
+  "name": "graphics-playground",
+  "version": "1.0.0",
+  "description": "Create illustrations and manipulate images on a digital canvas",
+  "main": "draw.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mpb9/graphics-playground.git"
+  },
+  "author": "Michael Beebe",
+  "homepage": "https://github.com/mpb9/graphics-playground#readme"
+}

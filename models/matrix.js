@@ -1,24 +1,15 @@
-class Matrix{
-    constructor(SX, KX, TX, KY, SY, TY){
-        this.SX = SX;
-        this.KX = KX;
-        this.TX = TX;
-        this.KY = KY;
-        this.SY = SY;
-        this.TY = TY;
-        
-
-    }
-    get mat(){
-        return [
-            this.SX, this.KX, this.TX, 
-            this.KY, this.SY, this.TY,
-            0, 0, 1
-        ];
-    }
-
-    
-
+class Matrix {
+  constructor(SX, KX, TX, KY, SY, TY) {
+    this.SX = SX;
+    this.KX = KX;
+    this.TX = TX;
+    this.KY = KY;
+    this.SY = SY;
+    this.TY = TY;
+  }
+  get mat() {
+    return [this.SX, this.KX, this.TX, this.KY, this.SY, this.TY, 0, 0, 1];
+  }
 }
 
 /**
@@ -26,31 +17,30 @@ class Matrix{
  * @param {number} ty
  */
 const translate = (tx, ty) => {
-    
-    return new Matrix(1,0,tx,0,1,ty);
-}
+  return new Matrix(1, 0, tx, 0, 1, ty);
+};
 
 /**
  * @param {number} sx
  * @param {number} sy
  */
 const scale = (sx, sy) => {
-    return new Matrix(sx, 0, 0, 0, sy, 0);
-}
+  return new Matrix(sx, 0, 0, 0, sy, 0);
+};
 
 const rotate = (radians) => {
-    // GMatrix m = GMatrix();
-    // m.mat[0] = cos(radians);    m.mat[1] = -sin(radians);    m.mat[2] = 0;
-    // m.mat[3] = sin(radians);    m.mat[4] = cos(radians);    m.mat[5] = 0;
-    return  new Matrix(Math.cos(radians), -Math.sin(radians), 0, Math.sin(radians), Math.cos(radians), 0);
-}
+  // GMatrix m = GMatrix();
+  // m.mat[0] = cos(radians);    m.mat[1] = -sin(radians);    m.mat[2] = 0;
+  // m.mat[3] = sin(radians);    m.mat[4] = cos(radians);    m.mat[5] = 0;
+  return new Matrix(Math.cos(radians), -Math.sin(radians), 0, Math.sin(radians), Math.cos(radians), 0);
+};
 
 /**
  *  Return the product of two matrices: a * b
  */
 const concat = (a, b) => {
-    let m = new Matrix();
-    /*
+  let m = new Matrix();
+  /*
     m.mat[0] = a.mat[0]*b.mat[0] + a.mat[1]*b.mat[3];           
     m.mat[1] = a.mat[0]*b.mat[1] + a.mat[1]*b.mat[4];    
     m.mat[2] = a.mat[0]*b.mat[2] + a.mat[1]*b.mat[5] + a.mat[2];    
@@ -59,17 +49,17 @@ const concat = (a, b) => {
     m.mat[5] = a.mat[3]*b.mat[2] + a.mat[4]*b.mat[5] + a.mat[5];
     return m;
     */
-}
+};
 
 /*
-*  Compute the inverse of this matrix, and store it in the "inverse" parameter, being
-*  careful to handle the case where 'inverse' might alias this matrix.
-*
-*  If this matrix is invertible, return true. If not, return false, and ignore the
-*  'inverse' parameter.
-*/
-const invert = ( inverse) => {
-    /*
+ *  Compute the inverse of this matrix, and store it in the "inverse" parameter, being
+ *  careful to handle the case where 'inverse' might alias this matrix.
+ *
+ *  If this matrix is invertible, return true. If not, return false, and ignore the
+ *  'inverse' parameter.
+ */
+const invert = (inverse) => {
+  /*
     var a = this->mat[0];  
     var b = this->mat[1];  
     var c = this->mat[2];
@@ -91,7 +81,7 @@ const invert = ( inverse) => {
     return true;
 
     */
-}
+};
 
 /**
  *  Transform the set of points in src, storing the resulting points in dst, by applying this
