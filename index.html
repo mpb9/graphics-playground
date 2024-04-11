@@ -113,14 +113,14 @@
 
     <!--MARK: Balls, etc -->
     <div id="bounceContainer">
-      <h4 style="padding: 10px; font-size: 24px">Michael Beebe's Graphic Playground</h4>
-      <a id="goToGame" href="./game/kinda.html">barely a game</a>
+      <h4 style="padding: 8px; font-size: 26px">Michael Beebe's Graphic Playground</h4>
+      <a id="goToGame" href="./game/kinda">play 10% of a game?</a>
     </div>
 
     <!-- MARK: Canvas -->
     <div id="canvas-containter">
       <div id="canvas-info">
-        <div style="float: left; margin: 0; width: 9%">
+        <div style="float: left; margin: 0; padding-left: 1%; width: 9%">
           <button id="toolboxButton">
             <p id="toolboxtext1">tool</p>
             <p id="toolboxtext2">box</p>
@@ -132,7 +132,7 @@
               Choose Shape/Stroke Fill
               <div id="fillOption" class="fillOption">
                 <button id="solidChosen" class="chooseFill">select</button>
-                solid color:
+                solid:
                 <input type="color" id="fullColor" name="fullColor" title="select" placeholder="" value="#ff0000" />
               </div>
 
@@ -140,23 +140,19 @@
                 <button id="vertChosen" class="chooseFill">select</button>
                 <button id="horiChosen" class="chooseFill">horizontal</button>
 
-                linear gradient:
+                gradient:
                 <input type="color" id="gradColor1" name="gradColor1" title="select" placeholder="" value="#ff0000" />
                 <input type="color" id="gradColor2" name="gradColor2" title="select" placeholder="" value="#00ff00" />
               </div>
             </div>
-            <button id="fillButton" href="#" style="font-family: inherit" value="solid">choose fill</button>
-
+            <button id="fillButton" href="#" value="solid">fill</button>
             <button id="toolbutton" style="font-family: inherit">
-              fill
+              color
               <input type="color" id="colorPicker" name="colorPicker" title="select" placeholder="" value="#ff0000" />
               <input type="color" id="colorPicker2" name="colorPicker2" title="select" placeholder="" value="#ff0000" />
             </button>
-
             <input type="number" id="sSize" name="sSize" step="1" placeholder="width" min="1" max="99" />
-
             <input type="number" id="opacity" name="opacity" step="1" placeholder="opacity" min="0" max="99" />
-
             <form id="styleForm">
               <select name="capType" class="capStyles" id="capStyles" autocomplete="off">
                 <option class="capOption" value="butt" selected>no cap</option>
@@ -164,7 +160,6 @@
                 <option class="capOption" value="round">round</option>
               </select>
             </form>
-
             <form id="styleForm">
               <select name="pathType" class="strokeStyles" id="strokeStyles" autocomplete="off">
                 <option class="styleOption" value="linear" selected>linear</option>
@@ -172,59 +167,31 @@
                 <option class="styleOption" value="cubic">cubic</option>
               </select>
             </form>
-
             <button id="endLinesButton" style="font-family: inherit">new path</button>
-
             <button id="circleButton" style="font-family: inherit">circle</button>
-
             <button id="shapebutton" style="font-family: inherit">draw shape</button>
-
             <button id="endShapeButton" style="font-family: inherit">end shape</button>
-
-            <button id="eraseLast" style="font-family: inherit">erase last</button>
-
+            <button id="eraseLast" style="font-family: inherit">undo</button>
             <button id="clearbutton" style="font-family: inherit">clear</button>
-
             <button class="open-button" onclick="openForm()">help me!</button>
           </div>
 
           <div id="imageEditor">
             <label for="file" id="toolbutton2"
-              >add image
+              >image
               <input type="file" accept="image/*" name="image" id="file" style="margin-top: 0px; display: none" />
             </label>
-
-            <button id="tintButton" style="font-family: inherit">add tint</button>
-
-            <button
-              id="invertButton"
-              style="
-                cursor: pointer;
-                background-color: beige;
-                border: outset 3px cornflowerblue;
-                padding: 3px;
-                font-size: 14px;
-                display: inline-block;
-                margin-top: 5px;
-                margin-right: 15px;
-                height: 40px;
-                font-family: inherit;
-              "
-            >
-              invert
-            </button>
-
+            <button id="tintButton" style="font-family: inherit">tint</button>
+            <button id="invertButton">invert</button>
             <button id="noTintButton" style="font-family: inherit">remove tint</button>
-
-            <button id="deleteImgButton" style="font-family: inherit">erase image</button>
-
+            <button id="deleteImgButton" style="font-family: inherit">remove image</button>
             <a href="" download="icon" id="imgDownload" hidden>
-              <button id="download" style="font-family: inherit">download art</button>
+              <button id="download" style="font-family: inherit">download</button>
             </a>
           </div>
         </div>
 
-        <div style="float: left; margin: 0; width: 9%; text-align: right">
+        <div style="float: left; margin: 0; width: 9%; margin-right: 1%; text-align: right">
           <button id="toolboxButton2">
             <p
               style="
@@ -274,7 +241,7 @@
     </div>
 
     <!--MARK: About Me -->
-    <h1 style="margin: 0 auto; text-align: center; margin: 5px; padding-bottom: 5px; font-family: 'Comic Sans MS', cursive">
+    <h1 style="margin: 0 auto; text-align: center; margin: 2px; padding-bottom: 5px; font-family: 'Comic Sans MS', cursive">
       <a
         style="
           margin: 0 auto;
@@ -287,22 +254,10 @@
         href="https://github.com/mpb9/graphics-playground"
         >my code</a
       >
-      <a
-        style="
-          margin: 0 auto;
-          text-align: center;
-          margin: 5px;
-          padding-bottom: 5px;
-          font-family: 'Comic Sans MS', cursive;
-          color: aquamarine;
-        "
-        href=""
-        >my hockey site</a
-      >
     </h1>
 
     <div style="margin: 0 auto">
-      <h1 style="margin: 0 auto; text-align: center; margin: 5px; font-family: 'Comic Sans MS', cursive">HAVE FUN (:</h1>
+      <h1 style="margin: 0 auto; text-align: center; margin: 5px 0px 0px 0px; font-family: 'Comic Sans MS', cursive">HAVE FUN (:</h1>
     </div>
 
     <h3 style="margin: 0 auto; text-align: right; padding-bottom: 25px; padding-right: 50px; font-family: 'Comic Sans MS', cursive">
