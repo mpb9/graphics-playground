@@ -173,9 +173,9 @@ th {
 #nvmTakeMeBack {
   background-color: black;
   font-weight: 900;
-  font-size: 18px;
+  font-size: 20px;
   text-decoration: none;
-  color: #fda483;
+  color: #ffc1ab;
   padding: 10px 12px;
   border: 2px #ed4040 solid;
   font-family: monospace;
@@ -184,4 +184,20 @@ th {
   background-color: #c2ff95;
   color: black;
   border: 3px var(--accent-green) solid;
+  font-size: 17px;
+  font-weight: 100;
+  cursor: pointer;
+  font-style: italic;
+}
+#nvmTakeMeBack > i {
+  font-style: italic;
+  font-weight: 100;
+  font-size: 17px;
+  color: #ffe6dd;
+}
+#nvmTakeMeBack:hover > i {
+  color: #000000;
+  font-weight: 900;
+  font-size: 18px;
+  font-style: normal;
 }

@@ -1,12 +1,11 @@
 window.addEventListener("load", () => {
   const container = document.querySelector("#bounceContainer");
 
-  let stopPlz = false;
-  let noMoreCalls = false;
+  let hiddenWhenLoadingImage = false;
 
   let imaging = document.querySelector("#file");
   imaging.addEventListener("change", function () {
-    stopPlz = true;
+    hiddenWhenLoadingImage = true;
   });
 
   class Ball {
@@ -46,21 +45,26 @@ window.addEventListener("load", () => {
       [this.div.style.left, this.div.style.top] = [`${this.x}px`, `${this.y}px`];
     }
 
-    remove() {
+    hide() {
       [this.div.style.width, this.div.style.height] = [`0px`, `0px`];
+    }
+
+    appear() {
+      [this.div.style.width, this.div.style.height] = [`${this.diameter}px`, `${this.diameter}px`];
     }
   }
 
   const advance = () => {
-    if (!stopPlz) {
+    if (!hiddenWhenLoadingImage) {
       balls.forEach((ball) => ball.move());
-
-      //commented out for now just to reduce the drain on the server
-
       requestAnimationFrame(advance);
-    } else if (!noMoreCalls) {
-      balls.forEach((ball) => ball.remove());
-      noMoreCalls = true;
+    } else {
+      balls.forEach((ball) => ball.hide());
+      setTimeout(() => {
+        balls.forEach((ball) => ball.appear());
+        hiddenWhenLoadingImage = false;
+        advance();
+      }, 4000);
     }
   };
 

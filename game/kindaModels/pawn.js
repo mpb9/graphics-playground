@@ -3,7 +3,6 @@ const containerP = document.querySelector("#gameDisplay");
 // MARK: Pawn class
 class Pawn {
   constructor(x, y, ySpeed, width, height) {
-    // Initial model
     Object.assign(this, { x, y, ySpeed, width, height });
 
     // Initial view
@@ -24,7 +23,9 @@ class Pawn {
   }
 
   move() {
-    // Update the model
+    if (this.ySpeed === 0) return;
+
+    // Update object
     let top = containerP.offsetTop + 5;
     this.y = this.y + this.ySpeed;
 
@@ -37,7 +38,13 @@ class Pawn {
       }
     }
 
-    // Update the view
+    // Update view
     this.pawnDiv.style.top = `${this.y}px`;
+  }
+
+  removePawn() {
+    this.pawnDiv.style.width = `0px`;
+    this.pawnDiv.style.height = `0px`;
+    this.ySpeed = 0;
   }
 }

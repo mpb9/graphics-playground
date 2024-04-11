@@ -4,7 +4,6 @@ window.addEventListener("load", () => {
   // MARK: Player class
   class Player {
     constructor(x, y, xSpeed, ySpeed, width, height, color) {
-      // Initial model
       Object.assign(this, { x, y, xSpeed, ySpeed, width, height });
 
       // Initial view
@@ -21,22 +20,26 @@ window.addEventListener("load", () => {
 
       // Initiate arrow key event listeners
       document.addEventListener("keydown", (e) => {
-        if (e.code === "ArrowUp") this.userMove(0, -1);
-        else if (e.code === "ArrowDown") this.userMove(0, 1);
-        else if (e.code === "ArrowLeft") this.userMove(-1, 0);
-        else if (e.code === "ArrowRight") this.userMove(1, 0);
+        switch (e.code) {
+          case "ArrowUp":
+            this.userMove(0, -1);
+            break;
+          case "ArrowDown":
+            this.userMove(0, 1);
+            break;
+          case "ArrowLeft":
+            this.userMove(-1, 0);
+            break;
+          default:
+            this.userMove(1, 0);
+        }
       });
     }
 
     // Update Player position based on user input
     userMove(xMove, yMove) {
-      if (xMove != 0) {
-        [this.x, this.y] = [this.x + xMove * this.xSpeed, this.y];
-        [this.userdiv.style.left, this.userdiv.style.top] = [`${this.x + xMove * this.xSpeed}px`, `${this.y}px`];
-      } else {
-        [this.x, this.y] = [this.x, this.y + yMove * this.ySpeed];
-        [this.userdiv.style.left, this.userdiv.style.top] = [`${this.x}px`, `${this.y + yMove * this.ySpeed}px`];
-      }
+      [this.x, this.y] = [this.x + xMove * this.xSpeed, this.y + yMove * this.ySpeed];
+      [this.userdiv.style.left, this.userdiv.style.top] = [`${this.x}px`, `${this.y}px`];
     }
 
     // Make sure the player doesn't go out of the container
@@ -64,11 +67,23 @@ window.addEventListener("load", () => {
 
   // MARK: Game class
   class Game {
-    constructor(pawns, player) {
+    constructor(pawns, player, arena) {
       this.pawns = pawns;
       this.player = player;
+      this.arena = arena;
 
       requestAnimationFrame(advance);
+    }
+
+    // Game OVER!
+    pawnsWin() {
+      this.player.removePlayer();
+      this.pawns.forEach((pawn) => pawn.removePawn());
+      this.arena.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+      document.removeEventListener("keydown", this.player.userMove);
+      document.querySelector("#gameDisplay").addEventListener("click", () => {
+        location.reload();
+      });
     }
 
     // Shut down the entire game container (chaos scenario)
@@ -86,21 +101,23 @@ window.addEventListener("load", () => {
         game.player.y <= pawn.y + pawn.height &&
         game.player.y + game.player.height >= pawn.y
       ) {
-        game.player.removePlayer();
+        return game.pawnsWin();
       }
       pawn.move();
     });
     requestAnimationFrame(advance);
   };
 
-  // MARK: Initialize new Player, Pawns, Game
+  // MARK: Initialize new Player, Pawns, Game & Arena
+  const arena = new Arena(container);
+
   const playerW = 80;
   const playerH = 30;
   const player = new Player(
     container.offsetLeft + 5 + container.clientWidth / 2 - playerW / 2,
     container.offsetTop + 5 + container.clientHeight - playerH,
-    10,
-    10,
+    14,
+    14,
     playerW,
     playerH,
     "rgba(29, 29, 29, 1)"
@@ -109,5 +126,6 @@ window.addEventListener("load", () => {
     new Pawn(container.offsetLeft + 5, container.offsetTop + 5, 3, 20, 24),
     new Pawn(container.offsetLeft + container.clientWidth / 2, container.offsetTop + 5, 3, 30, 36),
   ];
-  const game = new Game(pawns, player);
+
+  const game = new Game(pawns, player, arena);
 });

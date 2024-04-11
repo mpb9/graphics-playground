@@ -1,10 +1,13 @@
 let fillShown = document.querySelector("#colorPicker");
 let fillShown2 = document.querySelector("#colorPicker2");
 
+// MARK: Handle fill options button click
 let openFill = document.querySelector("#fillButton");
 openFill.onclick = function () {
   var lightbox = document.getElementById("lightbox"),
     dimmer = document.createElement("div");
+
+  // MARK: Handle click outside of popup
   dimmer.style.width = window.innerWidth - 18 + "px";
   dimmer.style.height = window.innerHeight + "px";
   dimmer.className = "dimmer";
@@ -14,6 +17,7 @@ openFill.onclick = function () {
   };
   document.body.appendChild(dimmer);
 
+  // MARK: Handle solid color fill chosen
   var solidChosen = document.getElementById("solidChosen");
   document.querySelector("#fullColor").value = fillShown.value;
 
@@ -27,6 +31,7 @@ openFill.onclick = function () {
     fillShown2.style.display = "none";
   };
 
+  // MARK: Handle vertical gradient fill chosen
   var vertChosen = document.getElementById("vertChosen");
   document.querySelector("#gradColor1").value = fillShown.value;
   document.querySelector("#gradColor2").value = fillShown2.value;
@@ -42,6 +47,7 @@ openFill.onclick = function () {
     lightbox.style.visibility = "hidden";
   };
 
+  // MARK: Handle horizontal gradient fill chosen
   var horiChosen = document.getElementById("horiChosen");
   horiChosen.onclick = function () {
     fillShown.value = document.querySelector("#gradColor1").value;
