@@ -1,4 +1,5 @@
-### 2D Graphics Illustator (http://mygraphicsplayground.com/)
+### 2D Graphics Illustator: [graphics-playground.com](https://graphics-playground.com)
+
 #### General Info:
 Allows user to create illustrations and manipulate images on a "canvas." The user may add lines, shapes, and background images using the tool buttons and mouse clicks. Clicking the "help me" button on the site gives more detail into the specific functionality available to the user when creating their graphics. 
 
