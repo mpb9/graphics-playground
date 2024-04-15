@@ -221,9 +221,9 @@ svg.addEventListener("mousedown", function (e) {
   } else {
     let strokeSize = document.querySelector("#sSize");
 
-    if (strokeSize.valueAsNumber === NaN) {
-      ctx.lineWidth = 1;
-      svgLineWidth = 1;
+    if (strokeSize.value === "") {
+      ctx.lineWidth = 10;
+      svgLineWidth = 10;
     } else {
       ctx.lineWidth = Math.min(50, Math.max(1, strokeSize.valueAsNumber / 2));
       svgLineWidth = ctx.lineWidth;
