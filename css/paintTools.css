@@ -90,29 +90,32 @@
   margin-right: 15px;
   height: 40px;
 }
-#colorPicker {
-  cursor: pointer;
-  margin: 0 auto;
-  margin-top: 0px;
-  margin-left: 0px;
-  padding: 0px;
-  padding-bottom: 3px;
-  display: inline-block;
-  border: none;
-  z-index: -5;
-}
 
+#colorPicker,
 #colorPicker2 {
   cursor: pointer;
-  margin: 0 auto;
-  margin-top: 0px;
-  margin-left: 0px;
-  padding: 0px;
-  padding-bottom: 3px;
-  display: none;
-  visibility: hidden;
   border: none;
   z-index: -5;
+  width: 30px;
+  block-size: 30px;
+  inline-size: 30px;
+  vertical-align: middle;
+  background-color: transparent;
+  padding: 0px 0px 0px 2px;
+}
+#colorPicker2 {
+  display: none;
+  visibility: hidden;
+}
+#colorPicker::-webkit-color-swatch,
+#colorPicker2::-webkit-color-swatch {
+  border: 0px solid black;
+  border-radius: 15%;
+}
+#colorPicker::-moz-color-swatch,
+#colorPicker2::-moz-color-swatch {
+  border: 0px solid black;
+  border-radius: 15%;
 }
 
 #shapebutton {

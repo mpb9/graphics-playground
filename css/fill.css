@@ -63,37 +63,31 @@
   background-color: aquamarine;
 }
 
-#fullColor {
-  cursor: pointer;
-  margin: 0 auto;
-  margin-top: 0px;
-  margin-left: 10px;
-  padding: 3px;
-  display: inline-block;
-  border: none;
-  z-index: -5;
-}
-
-#gradColor1 {
-  cursor: pointer;
-  margin: 0 auto;
-  margin-top: 0px;
-  margin-left: 10px;
-  padding: 3px;
-  display: inline-block;
-  border: none;
-  z-index: -5;
-}
-
+#fullColor,
+#gradColor1,
 #gradColor2 {
   cursor: pointer;
-  margin: 0 auto;
-  margin-top: 0px;
-  margin-left: 10px;
-  padding: 3px;
-  display: inline-block;
   border: none;
   z-index: -5;
+  width: 40px;
+  block-size: 40px;
+  inline-size: 40px;
+  vertical-align: middle;
+  background-color: transparent;
+  padding: 0px 0px 0px 2px;
+  margin-left: 2px;
+}
+#fullColor::-webkit-color-swatch,
+#gradColor1::-webkit-color-swatch,
+#gradColor2::-webkit-color-swatch {
+  border: 0px solid black;
+  border-radius: 15%;
+}
+#fullColor::-moz-color-swatch,
+#gradColor1::-moz-color-swatch,
+#gradColor2::-moz-color-swatch {
+  border: 0px solid black;
+  border-radius: 15%;
 }
 
 #horiChosen {
