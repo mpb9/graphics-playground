@@ -19,7 +19,7 @@ var svgIndices = new Array();
 var p0 = new Point(null, null);
 
 // vars for svg lines
-var svgLineWidth = 1;
+var svgLineWidth = 10;
 var lineP0 = new Point(null, null);
 var linePoints = new Array();
 
