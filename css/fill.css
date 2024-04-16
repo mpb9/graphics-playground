@@ -6,7 +6,7 @@
   padding: 3px 12px 3px 10px;
   font-size: 14px;
   display: inline-block;
-  margin-right: 15px;
+  margin-right: 10px;
   height: 40px;
   font-family: inherit;
 }
@@ -21,9 +21,8 @@
   height: max-content;
   padding: 15px 15px 15px 10px;
   font-size: 18px;
-  left: 13%;
-  right: 30%;
-  top: 40%;
+  left: 15%;
+  top: 45%;
 }
 
 .dimmer {
