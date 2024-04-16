@@ -19,7 +19,7 @@
   padding: 8px 10px;
   font-size: 14px;
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 #invertButton {
@@ -39,7 +39,7 @@
   padding: 8px 10px;
   font-size: 14px;
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 #deleteImgButton {
@@ -58,7 +58,7 @@
   padding: 8px 8px;
   font-size: 14px;
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 #download {
@@ -68,5 +68,5 @@
   padding: 8px 10px;
   font-size: 14px;
   display: inline-block;
-  margin-right: 15px;
+  margin-right: 8px;
 }
