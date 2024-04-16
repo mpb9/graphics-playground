@@ -96,6 +96,8 @@ imgTint.addEventListener("mousedown", function () {
 
     if (tintOpacity.value == "") {
       tintOpacity = 0.2;
+    } else if (tintOpacity.valueAsNumber >= 96) {
+      tintOpacity = 0.8;
     } else {
       tintOpacity = opacity.valueAsNumber / 100;
     }
@@ -195,6 +197,16 @@ function eraseTint() {
 }
 
 function createFittedImage(wRatio, hRatio) {
+  const imgBackground = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  imgBackground.setAttribute("x", "0");
+  imgBackground.setAttribute("y", "0");
+  imgBackground.setAttribute("height", can.height.toString());
+  imgBackground.setAttribute("width", can.width.toString());
+  imgBackground.setAttribute("fill", "rgb(0,0,0)");
+  imgBackground.setAttribute("fill-opacity", "0.9");
+
+  imgsvg.appendChild(imgBackground);
+
   for (var y = 0; y < 512; y += 1.2) {
     for (var x = 0; x < 770; x += 1.2) {
       var pix = imageBitmap.getAddress(GFloorToInt(wRatio * x), GFloorToInt(hRatio * y));
@@ -209,7 +221,7 @@ function createFittedImage(wRatio, hRatio) {
       imgShade.setAttribute("height", "1.3");
       imgShade.setAttribute("width", "1.3");
       imgShade.setAttribute("fill", pixColor);
-      imgShade.setAttribute("fill-opacity", "0.9");
+      imgShade.setAttribute("fill-opacity", "1");
       //imgShade.setAttribute("id", pixID.toString());
 
       imgsvg.appendChild(imgShade);
