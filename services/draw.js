@@ -258,13 +258,36 @@ function addPathClick(canvas, event, ctx, color2, svgLineWidth) {
     fillShape(linePoints[0], linePoints[0].length, canvas.height, canvas.width, ctx.strokeStyle, color2, "linear");
 
     if (capy == "round") {
-      fillShape(linePoints[1], linePoints[1].length, canvas.height, canvas.width, ctx.strokeStyle, color2, "quadratic");
+      const overrideMinY = Math.min(Math.min(linePoints[0][0].fY, linePoints[0][1].fY), Math.min(linePoints[0][2].fY, linePoints[0][3].fY));
+      const overrideMaxY = Math.max(Math.max(linePoints[0][0].fY, linePoints[0][1].fY), Math.max(linePoints[0][2].fY, linePoints[0][3].fY));
+
+      fillShape(
+        linePoints[1],
+        linePoints[1].length,
+        canvas.height,
+        canvas.width,
+        ctx.strokeStyle,
+        color2,
+        "quadratic",
+        overrideMinY,
+        overrideMaxY
+      );
 
       if (svgChildID > svgIndices[svgIndices.length - 1]) {
         svgIndices[svgIndices.length] = svgChildID;
       }
 
-      fillShape(linePoints[2], linePoints[2].length, canvas.height, canvas.width, ctx.strokeStyle, color2, "quadratic");
+      fillShape(
+        linePoints[2],
+        linePoints[2].length,
+        canvas.height,
+        canvas.width,
+        ctx.strokeStyle,
+        color2,
+        "quadratic",
+        overrideMinY,
+        overrideMaxY
+      );
 
       if (svgChildID > svgIndices[svgIndices.length - 1]) {
         svgIndices[svgIndices.length] = svgChildID;
@@ -296,7 +319,7 @@ function drawShape(canvas, height, width, p, ctx, cleared) {
   svgPoints[svgPoints.length] = p;
 }
 
-function fillShape(pts, count, height, width, color, color2, path) {
+function fillShape(pts, count, height, width, color, color2, path, overrideMinY = null, overrideMaxY = null) {
   //NOT CLIPPING EDGES, NO SHADERS, NO CUBID OR QUAD
   const ptsSize = count + 1;
   pts[pts.length] = pts[0];
@@ -361,8 +384,11 @@ function fillShape(pts, count, height, width, color, color2, path) {
         x1 = tempEs[i].currX;
 
         var shapeColor = color;
-
-        fillIt(x0, x1, y, shapeColor, color2, minY, maxY);
+        if (overrideMaxY != null) {
+          fillIt(x0, x1, y, shapeColor, color2, overrideMinY, overrideMaxY);
+        } else {
+          fillIt(x0, x1, y, shapeColor, color2, minY, maxY);
+        }
       }
     }
     tempEs = [];
