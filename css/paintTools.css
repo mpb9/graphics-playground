@@ -8,6 +8,7 @@
 
 #paintEditor {
   width: 70%;
+  /* width: 620px; */
   float: left;
   height: fit-content;
   font-family: "Comic Sans MS", cursive;
@@ -80,11 +81,11 @@
   background-color: aquamarine;
 }
 
-#toolbutton {
+#colorButton {
   background-color: beige;
   border: outset 3px aquamarine;
   text-shadow: none;
-  padding: 3px 5px;
+  padding: 0px 2px;
   font-size: 14px;
   display: inline-block;
   margin-right: 15px;
@@ -96,12 +97,12 @@
   cursor: pointer;
   border: none;
   z-index: -5;
-  width: 30px;
-  block-size: 30px;
-  inline-size: 30px;
+  width: 34px;
+  block-size: 34px;
+  inline-size: 34px;
   vertical-align: middle;
   background-color: transparent;
-  padding: 0px 0px 0px 2px;
+  padding: 0px;
 }
 #colorPicker2 {
   display: none;
@@ -109,14 +110,40 @@
 }
 #colorPicker::-webkit-color-swatch,
 #colorPicker2::-webkit-color-swatch {
-  border: 0px solid black;
-  border-radius: 15%;
+  border: 0px;
+  border-radius: 0%;
 }
 #colorPicker::-moz-color-swatch,
 #colorPicker2::-moz-color-swatch {
-  border: 0px solid black;
-  border-radius: 15%;
+  border: 0px;
+  border-radius: 0%;
 }
+/* 
+#colorPicker, #colorPicker2 {
+  // 1.0
+  cursor: pointer;
+  border: none;
+  z-index: -5;
+  width: 30px;
+  block-size: 30px;
+  inline-size: 30px;
+  vertical-align: middle;
+  background-color: transparent;
+  padding: 0px 0px 0px 2px;
+
+  //2.0
+  cursor: pointer;
+  border: none;
+  z-index: -5;
+  width: 30px;
+  block-size: 31px;
+  inline-size: 30px;
+  vertical-align: middle;
+  background-color: transparent;
+  padding: 0px 1px;
+  margin: 0px 2px;
+}
+*/
 
 #shapebutton {
   cursor: pointer;

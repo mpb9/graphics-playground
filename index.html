@@ -129,8 +129,7 @@
         <div id="painttools">
           <div id="paintEditor">
             <div id="lightbox">
-              Choose Shape/Stroke Fill
-              <div id="fillOption" class="fillOption">
+              <div id="fillOption" class="fillOption" style="margin-bottom: 12px">
                 <button id="solidChosen" class="chooseFill">select</button>
                 solid:
                 <input type="color" id="fullColor" name="fullColor" title="select" placeholder="" value="#ff0000" />
@@ -146,10 +145,17 @@
               </div>
             </div>
             <button id="fillButton" href="#" value="solid">fill</button>
-            <button id="toolbutton" style="font-family: inherit; vertical-align: bottom">
-              color
+            <button id="colorButton" style="font-family: inherit; vertical-align: bottom">
               <input type="color" id="colorPicker" name="colorPicker" title="select" placeholder="" value="#ff0000" />
-              <input type="color" id="colorPicker2" name="colorPicker2" title="select" placeholder="" value="#ff0000" />
+              <input
+                type="color"
+                id="colorPicker2"
+                name="colorPicker2"
+                title="select"
+                placeholder=""
+                value="#ff0000"
+                style="margin-left: 0px"
+              />
             </button>
             <input type="number" id="sSize" name="sSize" step="1" placeholder="width" min="1" max="99" />
             <input type="number" id="opacity" name="opacity" step="1" placeholder="opacity" min="0" max="99" />
