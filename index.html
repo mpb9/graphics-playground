@@ -127,10 +127,22 @@
           </button>
         </div>
         <div id="painttools">
-          <div id="paintEditor">
+          <div id="deleteEditor">
+            <button id="clearbutton" style="font-family: inherit">clear</button>
+            <button id="eraseLast" style="font-family: inherit">undo</button>
+          </div>
+
+          <div id="fillEditor">
+            <button id="endLinesButton" style="font-family: inherit">new path</button>
+            <form id="styleForm">
+              <select name="capType" class="capStyles" id="capStyles" autocomplete="off">
+                <option class="capOption" value="butt" selected>no cap</option>
+                <option class="capOption" value="square">square</option>
+                <option class="capOption" value="round">round</option>
+              </select>
+            </form>
             <div id="lightbox">
-              Choose Shape/Stroke Fill
-              <div id="fillOption" class="fillOption">
+              <div id="fillOption" class="fillOption" style="margin-bottom: 12px">
                 <button id="solidChosen" class="chooseFill">select</button>
                 solid:
                 <input type="color" id="fullColor" name="fullColor" title="select" placeholder="" value="#ff0000" />
@@ -145,21 +157,34 @@
                 <input type="color" id="gradColor2" name="gradColor2" title="select" placeholder="" value="#00ff00" />
               </div>
             </div>
-            <button id="fillButton" href="#" value="solid">fill</button>
-            <button id="toolbutton" style="font-family: inherit">
-              color
+            <button id="fillButton" href="#" value="solid" style="margin-top: 10px">fill style</button>
+            <button id="colorButton" style="font-family: inherit; vertical-align: bottom; margin-top: 10px">
               <input type="color" id="colorPicker" name="colorPicker" title="select" placeholder="" value="#ff0000" />
-              <input type="color" id="colorPicker2" name="colorPicker2" title="select" placeholder="" value="#ff0000" />
+              <input
+                type="color"
+                id="colorPicker2"
+                name="colorPicker2"
+                title="select"
+                placeholder=""
+                value="#ff0000"
+                style="margin-left: 0px"
+              />
             </button>
-            <input type="number" id="sSize" name="sSize" step="1" placeholder="width" min="1" max="99" />
-            <input type="number" id="opacity" name="opacity" step="1" placeholder="opacity" min="0" max="99" />
-            <form id="styleForm">
-              <select name="capType" class="capStyles" id="capStyles" autocomplete="off">
-                <option class="capOption" value="butt" selected>no cap</option>
-                <option class="capOption" value="square">square</option>
-                <option class="capOption" value="round">round</option>
-              </select>
-            </form>
+          </div>
+
+          <div id="paintEditor">
+            <div id="widthButton">
+              <label for="sSize">width</label>
+              <input type="range" id="sSize" name="sSize" step="1" placeholder="width" min="1" max="99" value="10" />
+            </div>
+            <div id="opacityButton">
+              <label for="opacity">opacity</label>
+              <input type="range" id="opacity" name="opacity" step="1" placeholder="opacity" min="0" max="99" value="99" />
+            </div>
+          </div>
+
+          <div id="shapeEditor">
+            <button id="shapebutton" style="font-family: inherit">draw shape</button>
             <form id="styleForm">
               <select name="pathType" class="strokeStyles" id="strokeStyles" autocomplete="off">
                 <option class="styleOption" value="linear" selected>linear</option>
@@ -167,27 +192,30 @@
                 <option class="styleOption" value="cubic">cubic</option>
               </select>
             </form>
-            <button id="endLinesButton" style="font-family: inherit">new path</button>
-            <button id="circleButton" style="font-family: inherit">circle</button>
-            <button id="shapebutton" style="font-family: inherit">draw shape</button>
-            <button id="endShapeButton" style="font-family: inherit">end shape</button>
-            <button id="eraseLast" style="font-family: inherit">undo</button>
-            <button id="clearbutton" style="font-family: inherit">clear</button>
-            <button class="open-button" onclick="openForm()">help me!</button>
+            <button id="circleButton" style="font-family: inherit; margin-top: 10px">draw circle</button>
+            <button id="endShapeButton" style="font-family: inherit; margin-top: 10px">end shape</button>
           </div>
 
           <div id="imageEditor">
-            <label for="file" id="toolbutton2"
-              >image
-              <input type="file" accept="image/*" name="image" id="file" style="margin-top: 0px; display: none" />
-            </label>
-            <button id="tintButton" style="font-family: inherit">tint</button>
-            <button id="invertButton">invert</button>
-            <button id="noTintButton" style="font-family: inherit">remove tint</button>
-            <button id="deleteImgButton" style="font-family: inherit">remove image</button>
-            <a href="" download="icon" id="imgDownload" hidden>
-              <button id="download" style="font-family: inherit">download</button>
-            </a>
+            <div id="imageEditorRow">
+              <label for="file" id="toolbutton2"
+                >image
+                <input type="file" accept="image/*" name="image" id="file" style="margin-top: 0px; display: none" />
+              </label>
+              <button id="tintButton" style="font-family: inherit">tint</button>
+              <button id="invertButton">invert</button>
+            </div>
+            <div id="imageEditorRow">
+              <button id="noTintButton" style="font-family: inherit">remove tint</button>
+              <button id="deleteImgButton" style="font-family: inherit">remove image</button>
+              <a href="" download="icon" id="imgDownload" hidden>
+                <button id="download" style="font-family: inherit">download</button>
+              </a>
+            </div>
+          </div>
+
+          <div id="helpEditor">
+            <button class="open-button" onclick="openForm()">help me!</button>
           </div>
         </div>
 
