@@ -6,23 +6,23 @@
   height: fit-content;
   font-family: "Comic Sans MS", cursive;
   justify-content: center;
-  align-items: baseline;
+  align-items: flex-start;
 }
 
 #fillEditor {
-  width: 190px;
+  width: 185px;
   margin-top: 10px;
   margin-bottom: 0px;
   margin-right: 1%;
   justify-content: flex-start;
 }
 #paintEditor {
-  width: 180px;
+  width: 145px;
   margin-top: 10px;
   margin-bottom: 0px;
   margin-left: 0px;
   justify-content: flex-start;
-  margin-right: 0%;
+  margin-right: 3%;
 }
 #shapeEditor {
   /* pathType, circle, draw/end shape */
@@ -37,16 +37,14 @@
   width: 60px;
   margin-top: 10px;
   margin-bottom: 0px;
-  margin-right: 3%;
+  margin-right: 2%;
   justify-content: flex-start;
 }
-
 #helpEditor {
   /* help */
-  width: 90px;
+  width: 80px;
   margin-top: 10px;
   margin-bottom: 0px;
-  justify-content: flex-start;
 }
 
 #opacityButton {
@@ -152,7 +150,6 @@
   display: inline-block;
   align-content: center;
   height: 34px !important;
-  margin-top: 10px;
 }
 #widthButton > label {
   vertical-align: middle;

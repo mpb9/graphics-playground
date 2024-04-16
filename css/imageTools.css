@@ -1,6 +1,6 @@
 #imageEditor {
-  width: max(18%, 220px);
-  margin: 5px 4% 0px 0%;
+  width: 220px;
+  margin: 5px 2.5% 0px 0%;
 }
 
 #imageEditorRow {
