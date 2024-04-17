@@ -2,7 +2,7 @@
   float: left;
   margin: 0 auto;
   padding-top: 2px;
-  width: 80%;
+  width: max(80%, 930px);
   display: inline-flex;
   height: fit-content;
   font-family: "Comic Sans MS", cursive;
@@ -40,10 +40,11 @@
   margin-bottom: 0px;
   margin-right: 1.7%;
   justify-content: flex-start;
+  padding-left: 5px;
 }
 #helpEditor {
   /* help */
-  width: 75px;
+  width: 15px;
   margin-top: 10px;
   margin-bottom: 0px;
 }
